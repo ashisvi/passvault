@@ -1,20 +1,23 @@
-import { Redirect } from "expo-router";
-import React from "react";
-import { Text } from "react-native";
-import { useAuth } from "./context/AuthContext";
+import { Text, View } from "@/components/Themed";
+import { StyleSheet } from "react-native";
 
-const Page = () => {
-  const { authState, isLoading } = useAuth();
-
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
-
-  if (authState?.authenticated) {
-    return <Redirect href="/home" />;
-  }
-
-  return <Redirect href="/login" />;
+const HomePage = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Hello World!</Text>
+    </View>
+  );
 };
 
-export default Page;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 25,
+  },
+});
+
+export default HomePage;
