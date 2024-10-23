@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+
+# build artifacts
+/dist
+/build
+
+# editor directories and files
+.vscode
+*.sublime-workspace
+
+# environment variables
+.env
+
+# log files
+logs
+*.log
+
+# operating system files
+.DS_Store
+.local
+.Spotlight-V100
+.Trashes
+
+# system files
+thumbs.db
+.vercel
