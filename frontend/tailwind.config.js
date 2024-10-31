@@ -21,6 +21,9 @@ module.exports = {
         "montserrat-bold": ["Montserrat-Bold", "sans-serif"],
         "montserrat-extrabold": ["Montserrat-ExtraBold", "sans-serif"],
       },
+      screens: {
+        'xs': '475px', // Extra small devices
+      },
     },
   },
   plugins: [],
