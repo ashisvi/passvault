@@ -1,4 +1,5 @@
 import { API_URL, useAuth } from "@/app/context/AuthContext";
+import { decryptPassword, encryptPassword } from "@/utils/encryption";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -28,7 +29,12 @@ const usePasswords = () => {
       });
 
       const data = await response.data;
-      setPasswords(data?.passwords);
+      const encryptedPasswords = data?.passwords?.map((password: Password) => ({
+        ...password,
+        password: decryptPassword(password.password),
+      }));
+
+      setPasswords(encryptedPasswords);
     } catch (err) {
       console.log(err);
       setError("Failed to fetch passwords");
@@ -46,6 +52,7 @@ const usePasswords = () => {
         `${API_URL}/passwords`,
         {
           ...newPassword,
+          password: encryptPassword(newPassword.password),
         },
         {
           headers,
@@ -55,6 +62,7 @@ const usePasswords = () => {
 
       return result;
     } catch (err) {
+      console.log("Failed to add password:", err);
       setError("Failed to add password");
     } finally {
       setLoading(false);
@@ -67,13 +75,17 @@ const usePasswords = () => {
     try {
       const result = await axios.put(
         `${API_URL}/passwords/${id}`,
-        updatePassword,
+        {
+          ...updatedPassword,
+          password: encryptPassword(updatedPassword.password),
+        },
         headers
       );
 
       fetchPasswords();
-      return result;
+      return result
     } catch (err) {
+      console.log("Failed to update password:", err);
       setError("Failed to update password");
     } finally {
       setLoading(false);
@@ -85,9 +97,10 @@ const usePasswords = () => {
     setError(null);
 
     try {
-      await fetch(`${API_URL as string}/${id}`, {
-        method: "DELETE",
+      await axios.delete(`${API_URL}/passwords/${id}`, {
+        headers,
       });
+
       fetchPasswords();
     } catch (err) {
       setError("Failed to delete password");

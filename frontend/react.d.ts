@@ -5,8 +5,8 @@ interface Password {
   userId?: string;
   websiteName?: string;
   websiteUrl?: string;
-  username?: string;
-  password?: string;
+  username: string;
+  password: string;
   tag?: string;
   createdAt?: string;
   updatedAt?: string;

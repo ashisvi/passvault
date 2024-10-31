@@ -2,7 +2,7 @@ import { Button } from "@/components";
 import usePasswords from "@/hooks/usePasswords";
 import { validatePassword } from "@/utils";
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 
@@ -43,16 +43,18 @@ const EditPassword = () => {
       return validatePassword(passwordExist?.password);
   }, [password]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (websiteName && websiteUrl && username && password) {
-      const result = updatePassword(id as string, {
+      const result = await updatePassword(id as string, {
         websiteName,
         websiteUrl,
         username,
         password,
       });
 
-      console.log(result);
+      if (result && result?.status === 200) {
+        return router.replace(`passwords/${id}/password-page`);
+      }
     }
   };
 
