@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: any) => {
       console.log("Registration error:", err.message);
       return {
         error: true,
-        msg: err.response?.data?.message || "Registration failed",
+        msg: (err.response?.data as { message?: string })?.message || "Registration failed",
       };
     } finally {
       setLoading(false);
@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }: any) => {
       console.log("Login error:", err.message);
       return {
         error: true,
-        msg: err.response?.data?.message || "Login failed",
+        msg: (err.response?.data as { message?: string })?.message || "Login failed",
       };
     } finally {
       setLoading(false);
