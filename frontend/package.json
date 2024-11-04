@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.25.7",
+    "@clerk/clerk-expo": "^2.2.30",
+    "@clerk/nextjs": "^6.1.0",
     "@react-native/assets-registry": "^0.74.88",
     "@types/react": "~18.2.79",
     "axios": "^1.7.7",

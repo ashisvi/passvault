@@ -11,7 +11,15 @@ const Login = () => {
   const { onLogin } = useAuth();
 
   const login = async () => {
-    const result = await onLogin(email, password);
+    let result;
+    if (onLogin) {
+      result = await onLogin(email, password);
+      if (result && result?.error) {
+        alert(result?.msg);
+      }
+    } else {
+      alert("Login function is not available.");
+    }
 
     if (result && result?.error) {
       alert(result?.msg);
@@ -42,10 +50,15 @@ const Login = () => {
           />
         </View>
         <Button handleOnPress={login} isDisabled={disabled} />
+        
         <Text className="mt-3">
           Not registered?
           <Link href="register" className="text-secondary">
             <Text> Register</Text>
+          </Link>
+          {" "}or{" "}
+          <Link href="/sign-in" className="text-secondary">
+            <Text>Sign in with Google</Text>
           </Link>
         </Text>
       </View>

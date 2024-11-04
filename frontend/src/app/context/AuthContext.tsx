@@ -15,12 +15,12 @@ const TOKEN_KEY = "my-jwt";
 export const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const AuthContext = createContext<AuthProps>({});
 
-console.log("API_URL", API_URL);
-
+// Custom hook to access auth context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
+// AuthProvider component
 export const AuthProvider = ({ children }: any) => {
   const [loading, setLoading] = useState(false);
   const [authState, setAuthState] = useState<{
@@ -31,90 +31,81 @@ export const AuthProvider = ({ children }: any) => {
     authenticated: null,
   });
 
+  // Load token from SecureStore when app loads
   useEffect(() => {
     setLoading(true);
     const loadToken = async () => {
-      const token = await SecureStore.getItemAsync(TOKEN_KEY);
-      console.log("stored: ", token);
-
-      if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-        setAuthState({
-          token,
-          authenticated: true,
-        });
+      try {
+        const token = await SecureStore.getItemAsync(TOKEN_KEY);
+        if (token) {
+          axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+          setAuthState({ token, authenticated: true });
+        }
+      } catch (error) {
+        console.log("Error loading token:", error);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
-
     loadToken();
   }, []);
 
+  // Register function to create a new account
   const register = async (name: string, email: string, password: string) => {
     setLoading(true);
-
     try {
-      return await axios.post(`${API_URL}/auth/register`, {
-        name,
-        email,
-        password,
-      });
-    } catch (e) {
-      console.log(e)
-      return { error: true, msg: (e as any).response.data.message };
+      const response = await axios.post(`${API_URL}/auth/register`, { name, email, password });
+      return response;
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log("Registration error:", err.message);
+      return {
+        error: true,
+        msg: (err.response?.data as { message?: string })?.message || "Registration failed",
+      };
     } finally {
       setLoading(false);
     }
   };
 
+  // Login function to authenticate user
   const login = async (email: string, password: string) => {
     setLoading(true);
-
     try {
-      const result = await axios.post(`${API_URL}/auth/login`, {
-        email,
-        password,
-      });
-
-      console.log("~ file AuthContext.tsx ~ login ~ result", result);
-
-      setAuthState({
-        token: result.data.token,
-        authenticated: true,
-      });
-
-      axios.defaults.headers.common["Authorization"] =
-        `Bearer ${result.data.token}`;
-
+      const result = await axios.post(`${API_URL}/auth/login`, { email, password });
+      setAuthState({ token: result.data.token, authenticated: true });
+      axios.defaults.headers.common["Authorization"] = `Bearer ${result.data.token}`;
       await SecureStore.setItemAsync(TOKEN_KEY, result.data.token);
-
       router.replace("/home");
       return result;
-    } catch (e) {
-      console.log((e as AxiosError).message)
-      return { error: true, msg: (e as any).response.data.message };
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log("Login error:", err.message);
+      return {
+        error: true,
+        msg: (err.response?.data as { message?: string })?.message || "Login failed",
+      };
     } finally {
       setLoading(false);
     }
   };
 
+  // Logout function to clear session
   const logout = async () => {
     setLoading(true);
-    await SecureStore.deleteItemAsync(TOKEN_KEY);
-
-    axios.defaults.headers.common["Authorization"] = "";
-
-    setAuthState({
-      token: null,
-      authenticated: null,
-    });
-
-    router.replace("/login");
-    setLoading(false);
+    try {
+      await SecureStore.deleteItemAsync(TOKEN_KEY);
+      axios.defaults.headers.common["Authorization"] = "";
+      setAuthState({ token: null, authenticated: null });
+      router.replace("/login");
+    } catch (error) {
+      console.log("Logout error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // Context value to provide throughout the app
   const value = {
     onRegister: register,
     onLogin: login,
