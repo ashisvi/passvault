@@ -1,4 +1,5 @@
 import { API_URL, useAuth } from "@/app/context/AuthContext";
+import { decryptPassword, encryptPassword } from "@/utils/encryption";
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 
@@ -21,7 +22,14 @@ const usePasswords = () => {
     
     try {
       const response = await axios.get(`${API_URL}/passwords`, { headers });
-      setPasswords(response.data?.passwords || []);
+
+      const data = await response.data?.passwords || [];
+      const encryptedPasswords = data.map((password: Password) => ({
+        ...password,
+        password: decryptPassword(password.password),
+      }));
+
+      setPasswords(encryptedPasswords);
     } catch (err) {
       console.error("Error fetching passwords:", err);
       setError("Failed to fetch passwords");
@@ -35,10 +43,21 @@ const usePasswords = () => {
     setError(null);
 
     try {
-      await axios.post(`${API_URL}/passwords`, newPassword, { headers });
+      const result = await axios.post(
+        `${API_URL}/passwords`,
+        {
+          ...newPassword,
+          password: encryptPassword(newPassword.password),
+        },
+        {
+          headers,
+        }
+      );
       fetchPasswords(); // refresh passwords list after addition
+
+      return result;
     } catch (err) {
-      console.error("Error adding password:", err);
+      console.log("Failed to add password:", err);
       setError("Failed to add password");
     } finally {
       setLoading(false);
@@ -48,12 +67,20 @@ const usePasswords = () => {
   const updatePassword = async (id: string, updatedPassword: Password) => {
     setLoading(true);
     setError(null);
-
     try {
-      await axios.put(`${API_URL}/passwords/${id}`, updatedPassword, { headers });
+      const result = await axios.put(
+        `${API_URL}/passwords/${id}`,
+        {
+          ...updatedPassword,
+          password: encryptPassword(updatedPassword.password),
+        },
+        headers
+      );
+
       fetchPasswords(); // refresh passwords list after update
+      return result
     } catch (err) {
-      console.error("Error updating password:", err);
+      console.log("Failed to update password:", err);
       setError("Failed to update password");
     } finally {
       setLoading(false);
@@ -68,7 +95,7 @@ const usePasswords = () => {
       await axios.delete(`${API_URL}/passwords/${id}`, { headers });
       fetchPasswords(); // refresh passwords list after deletion
     } catch (err) {
-      console.error("Error deleting password:", err);
+      console.error("Failed to delete password:", err);
       setError("Failed to delete password");
     } finally {
       setLoading(false);
