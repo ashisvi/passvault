@@ -2,6 +2,7 @@
   "expo": {
     "name": "passvault-expo",
     "slug": "passvault-expo",
+    "scheme": "com.ashisvi.passvault",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
