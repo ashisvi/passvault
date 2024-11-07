@@ -1,12 +1,27 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { View } from "@/components/Themed";
+import { useAuthStore } from "@/store/authStore";
+import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // login function from authStore
+  const { login } = useAuthStore();
+
+  // handle login
+  const handleLogin = async () => {
+    try {
+      await login(email, password);
+      router.replace("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -27,7 +42,7 @@ const Login = () => {
       </View>
       <Button
         title="Login"
-        onPress={() => {}}
+        onPress={handleLogin}
         disabled={false}
         style={{ width: "100%" }}
       />

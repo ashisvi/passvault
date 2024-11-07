@@ -22,6 +22,7 @@ const Input: React.FC<InputProps> = ({
       placeholder={placeholder}
       id={id}
       value={value}
+      onChangeText={onChangeText}
       secureTextEntry={isPassword}
       style={[styles.input, style]}
     />

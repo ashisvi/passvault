@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
@@ -28,7 +29,11 @@ const RootLayout = () => {
     }
   }, [loaded]);
 
-  return <Slot />;
+  return (
+    <QueryClientProvider client={new QueryClient()}>
+      <Slot />
+    </QueryClientProvider>
+  );
 };
 
 export default RootLayout;

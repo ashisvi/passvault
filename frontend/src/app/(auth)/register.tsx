@@ -1,6 +1,8 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import { View } from "@/components/Themed";
+import { useAuthStore } from "@/store/authStore";
+import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
@@ -8,6 +10,19 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // register function from authStore
+  const { register } = useAuthStore();
+
+  // Handle register action
+  const handleRegister = async () => {
+    try {
+      await register(name, email, password);
+      router.push("/login");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -34,7 +49,7 @@ const Register = () => {
       </View>
       <Button
         title="Register"
-        onPress={() => {}}
+        onPress={handleRegister}
         disabled={false}
         style={{ width: "100%" }}
       />
