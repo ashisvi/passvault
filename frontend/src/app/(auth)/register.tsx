@@ -18,7 +18,7 @@ const Register = () => {
   const handleRegister = async () => {
     try {
       await register(name, email, password);
-      router.push("/login");
+      router.push("/");
     } catch (error) {
       console.error(error);
     }

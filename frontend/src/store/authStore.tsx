@@ -47,8 +47,6 @@ export const useAuthStore = create<AuthState>((set: any) => ({
         password,
       });
 
-      console.log(response.data);
-
       if (response.status === 200) {
         const { token } = response.data;
         await SecureStore.setItemAsync("token", `Bearer ${token}`);

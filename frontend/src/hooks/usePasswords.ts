@@ -4,13 +4,13 @@ import {
   Password,
   UpdatePasswordDTO,
 } from "@/types/password";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+
+// Define query client
+const queryClient = new QueryClient();
 
 // Hook to fetch all passwords
 export const usePasswords = () => {
-  // Define query client
-  const queryClient = useQueryClient();
-
   // Define query
   const {
     data: passwords = [],

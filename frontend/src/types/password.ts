@@ -1,20 +1,23 @@
 export interface Password {
-  id: string;
-  title: string;
+  _id: string;
   username: string;
+  websiteName: string;
+  websiteUrl: string;
   password: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface CreatePasswordDTO {
-  title: string;
   username: string;
   password: string;
+  websiteName: string;
+  websiteUrl: string;
 }
 
 export interface UpdatePasswordDTO {
-  title?: string;
   username?: string;
   password?: string;
+  websiteName: string;
+  websiteUrl: string;
 }

@@ -18,11 +18,9 @@ class ApiError extends Error {
 export const passwordService = {
   // Function to handle fetch password action
   async fetchPasswords(): Promise<Password[]> {
-    console.log("fetching passwords");
     try {
       // Get request to fetch all data and return data
       const { data } = await axiosInstance.get<Password[]>(`/passwords`);
-      console.log("Passwords fetched : ", data);
       return data;
     } catch (error) {
       // Handling error while fetching password

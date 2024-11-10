@@ -7,9 +7,9 @@ import { StyleSheet } from "react-native";
 const HomePage = () => {
   const { isAuthenticated, user } = useAuthStore();
   console.log(isAuthenticated, user);
-  const { passwords } = usePasswords();
+  const { passwords, isLoading, error, addPassword } = usePasswords();
 
-  console.log(passwords);
+  console.log(passwords, isLoading, error);
 
   return (
     <View style={styles.container}>
