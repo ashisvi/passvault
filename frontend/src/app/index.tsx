@@ -14,7 +14,9 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Hello World!</Text>
-      <Link href="register">Register</Link>
+      <Link href={"/register"} style={{ color: "blue" }}>
+        Register
+      </Link>
     </View>
   );
 };
