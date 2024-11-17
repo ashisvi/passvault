@@ -1,3 +1,4 @@
+import useThemeColor from "@/hooks/useThemeColor";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { Text } from "./Themed";
@@ -17,13 +18,17 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   style,
 }) => {
+  const themeColor = useThemeColor();
+
   const buttonStyle =
-    buttonType === "primary" ? styles.primaryButton : styles.secondaryButton;
+    buttonType === "primary"
+      ? { ...styles.primaryButton, backgroundColor: themeColor.text }
+      : { ...styles.secondaryButton, backgroundColor: themeColor.background };
 
   const textStyle =
     buttonType === "primary"
-      ? styles.primaryButtonText
-      : styles.secondaryButtonText;
+      ? { color: themeColor.background }
+      : { color: themeColor.text };
 
   return (
     <Pressable
@@ -46,7 +51,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 4,
     elevation: 15,
-    backgroundColor: "black",
     flex: 1,
     maxHeight: 50,
   },
@@ -57,19 +61,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 4,
     elevation: 15,
-    backgroundColor: "white",
-    // borderColor: "black",
-    // borderWidth: 1,
     flex: 1,
     maxHeight: 50,
   },
   buttonText: {
     fontSize: 16,
-  },
-  primaryButtonText: {
-    color: "white",
-  },
-  secondaryButtonText: {
-    color: "black",
   },
 });

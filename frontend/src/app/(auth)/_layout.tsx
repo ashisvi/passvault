@@ -1,9 +1,11 @@
 import Button from "@/components/Button";
 import { Text, View } from "@/components/Themed";
+import useThemeColor from "@/hooks/useThemeColor";
 import { router, Stack, usePathname } from "expo-router";
 import { Image, StyleSheet } from "react-native";
 
 const AuthLayout = () => {
+  const themeColor = useThemeColor();
   const currentPath = usePathname();
 
   return (
@@ -19,8 +21,8 @@ const AuthLayout = () => {
             <Text style={styles.subHeading}>Secure Your Passwords</Text>
           </View>
         </View>
-        <View style={styles.formContainer}>
-          <View style={styles.formHeader}>
+        <View style={[styles.formContainer, { borderColor: themeColor.text }]}>
+          <View style={[styles.formHeader, { borderColor: themeColor.text }]}>
             <Button
               title="Register"
               onPress={() => router.push("/register")}
@@ -77,7 +79,6 @@ const styles = StyleSheet.create({
   formContainer: {
     marginTop: 20,
     borderWidth: 2,
-    borderColor: "black",
     borderRadius: 10,
     padding: 10,
     gap: 10,
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   },
   formHeader: {
     borderWidth: 1,
-    borderColor: "black",
+
     borderRadius: 10,
     padding: 10,
     flexDirection: "row",

@@ -1,3 +1,4 @@
+import useThemeColor from "@/hooks/useThemeColor";
 import { StyleSheet, TextInput, TextStyle } from "react-native";
 
 interface InputProps {
@@ -17,6 +18,8 @@ const Input: React.FC<InputProps> = ({
   onChangeText,
   style,
 }) => {
+  const themeColor = useThemeColor();
+
   return (
     <TextInput
       placeholder={placeholder}
@@ -24,7 +27,12 @@ const Input: React.FC<InputProps> = ({
       value={value}
       onChangeText={onChangeText}
       secureTextEntry={isPassword}
-      style={[styles.input, style]}
+      style={[
+        styles.input,
+        style,
+        { borderColor: "gray", color: themeColor.text },
+      ]}
+      placeholderTextColor="gray"
     />
   );
 };
@@ -35,13 +43,11 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 18,
     fontFamily: "MontserratSemiBold",
-    color: "black",
     backgroundColor: "transparent",
     borderWidth: 1,
-    borderColor: "gray",
     borderRadius: 4,
     marginBottom: 10,
-    paddingVertical: 5,
+    paddingVertical: 7,
     paddingHorizontal: 10,
     width: "100%",
   },
