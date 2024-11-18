@@ -30,9 +30,9 @@ const Input: React.FC<InputProps> = ({
       style={[
         styles.input,
         style,
-        { borderColor: "gray", color: themeColor.text },
+        { borderColor: themeColor.borderColor, color: themeColor.text },
       ]}
-      placeholderTextColor="gray"
+      placeholderTextColor={themeColor.borderColor}
     />
   );
 };

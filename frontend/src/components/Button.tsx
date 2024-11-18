@@ -22,8 +22,11 @@ const Button: React.FC<ButtonProps> = ({
 
   const buttonStyle =
     buttonType === "primary"
-      ? { ...styles.primaryButton, backgroundColor: themeColor.text }
-      : { ...styles.secondaryButton, backgroundColor: themeColor.background };
+      ? { ...styles.primaryButton, backgroundColor: themeColor.tint }
+      : {
+          ...styles.secondaryButton,
+          backgroundColor: themeColor.cardBackground,
+        };
 
   const textStyle =
     buttonType === "primary"
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
   primaryButton: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 8,
+    paddingVertical: 10,
     paddingHorizontal: 16,
     borderRadius: 4,
     elevation: 15,
@@ -66,5 +69,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    fontWeight: "bold",
   },
 });

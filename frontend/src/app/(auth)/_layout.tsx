@@ -21,8 +21,15 @@ const AuthLayout = () => {
             <Text style={styles.subHeading}>Secure Your Passwords</Text>
           </View>
         </View>
-        <View style={[styles.formContainer, { borderColor: themeColor.text }]}>
-          <View style={[styles.formHeader, { borderColor: themeColor.text }]}>
+        <View
+          style={[
+            styles.formContainer,
+            { borderColor: themeColor.borderColor },
+          ]}
+        >
+          <View
+            style={[styles.formHeader, { borderColor: themeColor.borderColor }]}
+          >
             <Button
               title="Register"
               onPress={() => router.push("/register")}
