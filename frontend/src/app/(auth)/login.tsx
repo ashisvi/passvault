@@ -17,7 +17,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await login(email, password);
-      router.replace("/");
+      router.replace("(tabs)");
     } catch (error) {
       console.log(error);
     }

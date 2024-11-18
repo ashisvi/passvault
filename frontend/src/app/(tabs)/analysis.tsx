@@ -1,15 +1,15 @@
 import { Text, View } from "@/components/Themed";
 import { StyleSheet } from "react-native";
 
-const HomePage = () => {
+const Analysis = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Home</Text>
+      <Text style={styles.text}>Analysis Page</Text>
     </View>
   );
 };
 
-export default HomePage;
+export default Analysis;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,18 +1,19 @@
 import { Text, View } from "@/components/Themed";
-import { usePasswords } from "@/hooks/usePasswords";
 import { useAuthStore } from "@/store/authStore";
-import { Link } from "expo-router";
+import { Link, Redirect } from "expo-router";
+import { Home } from "iconsax-react-native";
 import { StyleSheet } from "react-native";
 
-const HomePage = () => {
+const IndexPage = () => {
   const { isAuthenticated, user } = useAuthStore();
-  console.log(isAuthenticated, user);
-  const { passwords, isLoading, error, addPassword } = usePasswords();
 
-  console.log(passwords, isLoading, error);
+  console.log(isAuthenticated, user);
+
+  if (isAuthenticated) <Redirect href="/(tabs)" />;
 
   return (
     <View style={styles.container}>
+      <Home color="white" />
       <Text style={styles.text}>Hello World!</Text>
       <Link href={"/register"} style={{ color: "blue" }}>
         Register
@@ -32,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomePage;
+export default IndexPage;
