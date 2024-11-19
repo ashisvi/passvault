@@ -9,7 +9,8 @@
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_API_URL": "https://passvault-3ucq.onrender.com/api"
-      }
+      },
+      "autoIncrement": true
     },
     "preview": {
       "distribution": "internal"

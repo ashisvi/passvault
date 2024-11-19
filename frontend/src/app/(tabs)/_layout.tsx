@@ -1,5 +1,5 @@
 import useThemeColor from "@/hooks/useThemeColor";
-import { Tabs } from "expo-router";
+import { Link, Tabs } from "expo-router";
 import {
   Add,
   Home3,
@@ -33,8 +33,8 @@ const TabsLayout = () => {
   const themeColor = useThemeColor();
 
   const screenOptions = {
+    headerTintColor: themeColor.text,
     headerStyle: { backgroundColor: themeColor.background },
-    headerTitleStyle: { color: themeColor.text },
     tabBarStyle: {
       backgroundColor: themeColor.background,
       height: 65,
@@ -44,10 +44,14 @@ const TabsLayout = () => {
     tabBarLabelStyle: { fontSize: 12, paddingTop: 4 },
     headerTitleAlign: "center" as "center",
     headerLeft: () => (
-      <User size={28} color={themeColor.text} style={{ marginLeft: 10 }} />
+      <Link href="/profile" style={{ marginLeft: 10 }}>
+        <User size={28} color={themeColor.text} />
+      </Link>
     ),
     headerRight: () => (
-      <Add size={36} color={themeColor.text} style={{ marginRight: 10 }} />
+      <Link href="/new-password" style={{ marginRight: 10 }}>
+        <Add size={36} color={themeColor.text} />
+      </Link>
     ),
   };
 
@@ -56,7 +60,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Passwords",
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={Home3} color={color} />
           ),

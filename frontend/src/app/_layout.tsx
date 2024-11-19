@@ -1,12 +1,15 @@
+import useThemeColor from "@/hooks/useThemeColor";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Slot, SplashScreen } from "expo-router";
+import { Link, SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { Add, User } from "iconsax-react-native";
 import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
+  const themeColor = useThemeColor();
   const [loaded, error] = useFonts({
     SpaceMono: require("@assets/fonts/SpaceMono-Regular.ttf"),
     MontserratBlack: require("@assets/fonts/Montserrat-Black.ttf"),
@@ -30,10 +33,44 @@ const RootLayout = () => {
     }
   }, [loaded]);
 
+  const screenOptions = {
+    headerShown: true,
+    headerTintColor: themeColor.text,
+    headerStyle: { backgroundColor: themeColor.background },
+    headerTitleAlign: "center" as "center",
+  };
+
   return (
     <QueryClientProvider client={new QueryClient()}>
       <StatusBar />
-      <Slot />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen
+          name="new-password"
+          options={{
+            ...screenOptions,
+            title: "New password",
+          }}
+        />
+        <Stack.Screen
+          name="profile"
+          options={{
+            ...screenOptions,
+            title: "Profile",
+            headerLeft: () => (
+              <Link href="/profile" style={{ marginLeft: 10 }}>
+                <User size={28} color={themeColor.text} />
+              </Link>
+            ),
+            headerRight: () => (
+              <Link href="/new-password" style={{ marginRight: 10 }}>
+                <Add size={36} color={themeColor.text} />
+              </Link>
+            ),
+          }}
+        />
+      </Stack>
     </QueryClientProvider>
   );
 };

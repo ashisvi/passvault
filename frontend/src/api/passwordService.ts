@@ -20,8 +20,11 @@ export const passwordService = {
   async fetchPasswords(): Promise<Password[]> {
     try {
       // Get request to fetch all data and return data
-      const { data } = await axiosInstance.get<Password[]>(`/passwords`);
-      return data;
+      const { data } = await axiosInstance.get<{
+        message: string;
+        passwords: Password[];
+      }>(`/passwords`);
+      return data?.passwords;
     } catch (error) {
       // Handling error while fetching password
       if (error instanceof AxiosError) {

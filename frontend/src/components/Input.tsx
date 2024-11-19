@@ -1,13 +1,14 @@
 import useThemeColor from "@/hooks/useThemeColor";
 import { StyleSheet, TextInput, TextStyle } from "react-native";
 
-interface InputProps {
+export interface InputProps {
   placeholder: string;
   value?: string;
   id: string;
   isPassword?: boolean;
   onChangeText?: (e: string) => void;
   style?: TextStyle;
+  [key: string]: any;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -17,6 +18,7 @@ const Input: React.FC<InputProps> = ({
   isPassword,
   onChangeText,
   style,
+  ...props
 }) => {
   const themeColor = useThemeColor();
 
@@ -33,6 +35,7 @@ const Input: React.FC<InputProps> = ({
         { borderColor: themeColor.borderColor, color: themeColor.text },
       ]}
       placeholderTextColor={themeColor.borderColor}
+      {...props}
     />
   );
 };

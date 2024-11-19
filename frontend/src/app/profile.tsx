@@ -1,19 +1,15 @@
-import PasswordsList from "@/components/PasswordsList";
-import { View } from "@/components/Themed";
-import { usePasswords } from "@/hooks/usePasswords";
+import { Text, View } from "@/components/Themed";
 import { StyleSheet } from "react-native";
 
-const HomePage = () => {
-  const { passwords } = usePasswords();
-
+const ProfilePage = () => {
   return (
     <View style={styles.container}>
-      <PasswordsList data={passwords} />
+      <Text style={styles.text}>Profile Page</Text>
     </View>
   );
 };
 
-export default HomePage;
+export default ProfilePage;
 
 const styles = StyleSheet.create({
   container: {
