@@ -12,6 +12,7 @@ const PasswordsListItem = ({ password }: { password: Password }) => {
       <Image
         src={`https://${password.websiteUrl}/favicon.ico`}
         style={styles.image}
+        crossOrigin="anonymous"
       />
       <View style={styles.body}>
         <Text style={styles.website}>{password.websiteName}</Text>
@@ -38,11 +39,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   image: {
-    height: 50,
-    width: 50,
+    height: 40,
+    width: 40,
   },
   body: {
     flex: 1,
+    marginLeft: 10,
   },
   website: {
     fontWeight: "bold",

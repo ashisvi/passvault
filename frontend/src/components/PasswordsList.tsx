@@ -13,6 +13,8 @@ const PasswordsList: React.FC<PasswordsListProps> = ({ data }) => {
       <FlatList
         data={data}
         renderItem={({ item }) => <PasswordsListItem password={item} />}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+        keyExtractor={(item) => item._id}
       />
     </View>
   );

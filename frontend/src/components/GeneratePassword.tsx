@@ -3,18 +3,26 @@ import useThemeColor from "@/hooks/useThemeColor";
 import Slider from "@react-native-community/slider";
 import Checkbox from "expo-checkbox";
 import { ArrowRotateRight } from "iconsax-react-native";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 import Input from "./Input";
 
 interface GeneratePasswordProps {
   password: string;
   setPassword: (password: string) => void;
+  handleGeneratePassword: (
+    length: number,
+    numbers: boolean,
+    lowercase: boolean,
+    uppercase: boolean,
+    symbols: boolean
+  ) => void;
 }
 
 const GeneratePassword: React.FC<GeneratePasswordProps> = ({
   password,
   setPassword,
+  handleGeneratePassword,
 }) => {
   const themeColor = useThemeColor();
   const [length, setLength] = useState(8);
@@ -22,29 +30,6 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
   const [lowercase, setLowercase] = useState(true);
   const [uppercase, setUppercase] = useState(true);
   const [symbols, setSymbols] = useState(true);
-
-  const handleGeneratePassword = useCallback(() => {
-    const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-    const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const numberChars = "0123456789";
-
-    // Create the character set based on the selected options
-    let chars = "";
-    if (lowercase) chars += lowercaseChars;
-    if (uppercase) chars += uppercaseChars;
-    if (numbers) chars += numberChars;
-
-    // Initialize the password
-    let password = "";
-
-    // Generate password
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * chars.length);
-      password += chars.charAt(randomIndex);
-    }
-
-    setPassword(password);
-  }, [length, numbers, lowercase, uppercase, symbols]);
 
   return (
     <View style={styles.container}>
@@ -62,7 +47,15 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
         <ArrowRotateRight
           size={28}
           color={themeColor.borderColor}
-          onPress={handleGeneratePassword}
+          onPress={() =>
+            handleGeneratePassword(
+              length,
+              numbers,
+              lowercase,
+              uppercase,
+              symbols
+            )
+          }
         />
       </View>
       <View style={styles.controls}>
@@ -136,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 10,
+    minHeight: 200,
   },
   heading: {
     textAlign: "center",

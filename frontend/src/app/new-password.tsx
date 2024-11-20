@@ -2,17 +2,71 @@ import Button from "@/components/Button";
 import GeneratePassword from "@/components/GeneratePassword";
 import Input, { type InputProps } from "@/components/Input";
 import { Text, View } from "@/components/Themed";
+import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
-import { useState } from "react";
+import { router } from "expo-router";
+import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 const NewPassword = () => {
   const themeColor = useThemeColor();
+  const { addPassword } = usePasswords();
 
   const [websiteName, setWebsiteName] = useState("");
   const [username, setUsername] = useState("");
   const [websiteUrl, setWebsiteUrl] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleGeneratePassword = useCallback(
+    (
+      length: number,
+      numbers: boolean,
+      lowercase: boolean,
+      uppercase: boolean,
+      symbols: boolean
+    ) => {
+      const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+      const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const numberChars = "0123456789";
+      const symbolChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+      // Create the character set based on the selected options
+      let chars = "";
+      if (lowercase) chars += lowercaseChars;
+      if (uppercase) chars += uppercaseChars;
+      if (numbers) chars += numberChars;
+      if (symbols) chars += symbolChars;
+
+      // Initialize the password
+      let password = "";
+
+      // Generate password
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        password += chars.charAt(randomIndex);
+      }
+
+      setPassword(password);
+    },
+    [setPassword]
+  );
+
+  const handleSubmit = useCallback(async () => {
+    // Handle form submission
+    const passwordData = {
+      websiteName,
+      username,
+      websiteUrl,
+      password,
+    };
+
+    try {
+      await addPassword(passwordData);
+      router.push("/(tabs)");
+    } catch (error) {
+      console.error(error);
+    }
+  }, [websiteName, username, websiteUrl, password]);
 
   return (
     <View style={styles.container}>
@@ -50,12 +104,16 @@ const NewPassword = () => {
       ></View>
 
       {/* Password field */}
-      <GeneratePassword password={password} setPassword={setPassword} />
+      <GeneratePassword
+        password={password}
+        setPassword={setPassword}
+        handleGeneratePassword={handleGeneratePassword}
+      />
 
       {/* Buttons */}
       <View style={styles.buttons}>
         <Button onPress={() => {}} title="Generate" buttonType="secondary" />
-        <Button onPress={() => {}} title="Save" />
+        <Button onPress={handleSubmit} title="Save" />
       </View>
     </View>
   );
@@ -82,10 +140,14 @@ const TextField: React.FC<TextFieldProps> = ({
       <Input
         id={id}
         placeholder={placeholder}
-        style={{
-          ...styles.textInput,
-          borderBottomColor: themeColor.borderColor,
-        }}
+        value={value}
+        onChangeText={onChangeText}
+        isPassword={isPassword}
+        style={[
+          styles.textInput,
+          style,
+          { borderBottomColor: themeColor.borderColor },
+        ]}
       />
     </View>
   );
