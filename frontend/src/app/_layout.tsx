@@ -60,7 +60,7 @@ const RootLayout = () => {
             title: "Profile",
             headerLeft: () => (
               <Link href="/profile" style={{ marginLeft: 10 }}>
-                <User size={28} color={themeColor.text} />
+                <User size={28} color={themeColor.text} variant="Bold" />
               </Link>
             ),
             headerRight: () => (

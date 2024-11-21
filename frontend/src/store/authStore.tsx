@@ -3,6 +3,7 @@ import * as SecureStore from "expo-secure-store";
 import { create } from "zustand";
 
 interface AuthState {
+  token: string | null;
   isAuthenticated: boolean;
   user: any;
   setAuthenticated: (state: boolean) => void;
@@ -13,6 +14,7 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set: any) => ({
+  token: SecureStore.getItem("token"),
   isAuthenticated: false,
   user: null,
   setAuthenticated: (state: boolean) => set({ isAuthenticated: state }),
