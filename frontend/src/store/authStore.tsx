@@ -7,7 +7,7 @@ interface AuthState {
   isAuthenticated: boolean;
   user: any;
   setAuthenticated: (state: boolean) => void;
-  setUser: (state: any) => void;
+  fetchUser: () => void;
   register: (name: string, email: string, password: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -18,7 +18,6 @@ export const useAuthStore = create<AuthState>((set: any) => ({
   isAuthenticated: false,
   user: null,
   setAuthenticated: (state: boolean) => set({ isAuthenticated: state }),
-  setUser: (state: any) => set({ user: state }),
 
   // Function to handle register action
   register: async (name: string, email: string, password: string) => {
@@ -56,6 +55,16 @@ export const useAuthStore = create<AuthState>((set: any) => ({
       } else {
         throw new Error("Unable to login user");
       }
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // fetchUser action
+  fetchUser: async () => {
+    try {
+      const response = await axiosInstance.get("/auth/profile");
+      set({ isAuthenticated: true, user: response.data?.user });
     } catch (error) {
       throw error;
     }
