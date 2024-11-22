@@ -79,7 +79,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="analysis"
         options={{
-          title: "Analysis",
+          title: "Security",
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={ShieldSearch} color={color} />
           ),
@@ -88,6 +88,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="setting"
         options={{
+          headerShown: false,
           title: "Setting",
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={Setting2} color={color} />

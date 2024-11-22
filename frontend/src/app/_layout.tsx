@@ -1,9 +1,8 @@
 import useThemeColor from "@/hooks/useThemeColor";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { Link, SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Add, User } from "iconsax-react-native";
 import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
@@ -51,23 +50,6 @@ const RootLayout = () => {
           options={{
             ...screenOptions,
             title: "New password",
-          }}
-        />
-        <Stack.Screen
-          name="profile"
-          options={{
-            ...screenOptions,
-            title: "Profile",
-            headerLeft: () => (
-              <Link href="/profile" style={{ marginLeft: 10 }}>
-                <User size={28} color={themeColor.text} variant="Bold" />
-              </Link>
-            ),
-            headerRight: () => (
-              <Link href="/new-password" style={{ marginRight: 10 }}>
-                <Add size={36} color={themeColor.text} />
-              </Link>
-            ),
           }}
         />
       </Stack>
