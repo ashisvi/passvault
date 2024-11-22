@@ -67,20 +67,21 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="search"
+        options={{
+          headerShown: false,
+          title: "Search",
+          tabBarIcon: ({ focused, color }) => (
+            <TabBarIcon focused={focused} icon={SearchNormal1} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="analysis"
         options={{
           title: "Analysis",
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={ShieldSearch} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="search"
-        options={{
-          title: "Search",
-          tabBarIcon: ({ focused, color }) => (
-            <TabBarIcon focused={focused} icon={SearchNormal1} color={color} />
           ),
         }}
       />

@@ -42,7 +42,7 @@ const RootLayout = () => {
 
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <StatusBar />
+      <StatusBar backgroundColor={themeColor.background} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="(auth)" />
