@@ -9,8 +9,8 @@ const SettingPage = () => {
 
   return (
     <View style={styles.container}>
-      <LinkButton label="Profile" href="./setting/profile" />
-      <LinkButton label="Permissions" href="./setting" />
+      <LinkButton label="Profile" href="/(tabs)/setting/profile" />
+      <LinkButton label="Permissions" href="/(tabs)/setting" />
       <LinkButton
         label="Sync"
         switchBtn
@@ -23,8 +23,8 @@ const SettingPage = () => {
         switchValue={autoFill}
         setSwitchValue={setAutoFill}
       />
-      <LinkButton label="About" href="./setting/about" />
-      <LinkButton label="Help" href="./setting/help" />
+      <LinkButton label="About" href="/(tabs)/setting/about" />
+      <LinkButton label="Help" href="/(tabs)/setting/help" />
     </View>
   );
 };

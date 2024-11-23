@@ -33,12 +33,12 @@ const AuthLayout = () => {
             <Button
               title="Register"
               onPress={() => router.push("/register")}
-              buttonType={currentPath === "/register" ? "primary" : "secondary"}
+              variant={currentPath === "/register" ? "primary" : "secondary"}
             />
             <Button
               title="Login"
               onPress={() => router.push("/login")}
-              buttonType={currentPath === "/login" ? "primary" : "secondary"}
+              variant={currentPath === "/login" ? "primary" : "secondary"}
             />
           </View>
           <View style={styles.formContents}>

@@ -33,6 +33,7 @@ const TabsLayout = () => {
   const themeColor = useThemeColor();
 
   const screenOptions = {
+    tabBarHideOnKeyboard: true,
     headerTintColor: themeColor.text,
     headerStyle: { backgroundColor: themeColor.background },
     tabBarStyle: {
@@ -44,7 +45,7 @@ const TabsLayout = () => {
     tabBarLabelStyle: { fontSize: 12, paddingTop: 4 },
     headerTitleAlign: "center" as "center",
     headerLeft: () => (
-      <Link href="/profile" style={{ marginLeft: 10 }}>
+      <Link href="/setting/profile" style={{ marginLeft: 10 }}>
         <User size={28} color={themeColor.text} />
       </Link>
     ),

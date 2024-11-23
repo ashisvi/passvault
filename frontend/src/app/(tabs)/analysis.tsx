@@ -1,7 +1,7 @@
 import { Text, View } from "@/components/Themed";
 import { StyleSheet } from "react-native";
 
-const Analysis = () => {
+const AnalysisPage = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Analysis Page</Text>
@@ -9,7 +9,7 @@ const Analysis = () => {
   );
 };
 
-export default Analysis;
+export default AnalysisPage;
 
 const styles = StyleSheet.create({
   container: {

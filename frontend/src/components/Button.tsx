@@ -5,23 +5,25 @@ import { Text } from "./Themed";
 
 interface ButtonProps {
   title: string;
-  buttonType?: "primary" | "secondary";
+  variant?: "primary" | "secondary";
   onPress: () => void;
   disabled?: boolean;
   style?: any;
+  buttonTextStyle?: any;
 }
 
 const Button: React.FC<ButtonProps> = ({
   title,
-  buttonType = "primary",
+  variant = "primary",
   onPress,
   disabled,
   style,
+  buttonTextStyle,
 }) => {
   const themeColor = useThemeColor();
 
   const buttonStyle =
-    buttonType === "primary"
+    variant === "primary"
       ? { ...styles.primaryButton, backgroundColor: themeColor.tint }
       : {
           ...styles.secondaryButton,
@@ -29,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
         };
 
   const textStyle =
-    buttonType === "primary"
+    variant === "primary"
       ? { color: themeColor.background }
       : { color: themeColor.text };
 
@@ -39,7 +41,9 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       style={[buttonStyle, style]}
     >
-      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+      <Text style={[styles.buttonText, textStyle, buttonTextStyle]}>
+        {title}
+      </Text>
     </Pressable>
   );
 };

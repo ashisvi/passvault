@@ -5,7 +5,11 @@ import { create } from "zustand";
 interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
-  user: any;
+  user: {
+    _id?: string;
+    name?: string;
+    email?: string;
+  } | null;
   setAuthenticated: (state: boolean) => void;
   fetchUser: () => void;
   register: (name: string, email: string, password: string) => Promise<void>;
@@ -71,5 +75,8 @@ export const useAuthStore = create<AuthState>((set: any) => ({
   },
 
   // Function to handle logout action
-  logout: () => set({ isAuthenticated: false, user: null }),
+  logout: async () => {
+    await SecureStore.deleteItemAsync("token");
+    set({ isAuthenticated: false, user: null, token: null });
+  },
 }));

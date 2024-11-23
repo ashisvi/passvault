@@ -112,7 +112,7 @@ const NewPassword = () => {
 
       {/* Buttons */}
       <View style={styles.buttons}>
-        <Button onPress={() => {}} title="Generate" buttonType="secondary" />
+        <Button onPress={() => {}} title="Generate" variant="secondary" />
         <Button onPress={handleSubmit} title="Save" />
       </View>
     </View>

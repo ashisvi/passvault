@@ -10,6 +10,7 @@ interface LinkButtonProps {
   switchBtn?: boolean;
   switchValue?: boolean;
   setSwitchValue?: (value: boolean) => void;
+  customButton?: React.ReactElement;
 }
 
 const LinkButton: React.FC<LinkButtonProps> = ({
@@ -18,6 +19,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   switchBtn,
   switchValue,
   setSwitchValue,
+  customButton,
 }) => {
   const themeColor = useThemeColor();
 
@@ -25,7 +27,9 @@ const LinkButton: React.FC<LinkButtonProps> = ({
     <Pressable onPress={() => !switchBtn && href && router.push(href)}>
       <View style={styles.wrapper}>
         <Text style={styles.label}>{label}</Text>
-        {switchBtn ? (
+        {customButton ? (
+          customButton
+        ) : switchBtn ? (
           <Switch
             thumbColor={themeColor.tint}
             trackColor={{
