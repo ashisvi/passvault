@@ -24,7 +24,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
   setPassword,
   handleGeneratePassword,
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   const [length, setLength] = useState(8);
   const [numbers, setNumbers] = useState(true);
   const [lowercase, setLowercase] = useState(true);
@@ -35,7 +35,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
     <View style={styles.container}>
       <Text style={styles.heading}>Password</Text>
       <View
-        style={[styles.inputWrapper, { borderColor: themeColor.borderColor }]}
+        style={[styles.inputWrapper, { borderColor: themeColors.borderColor }]}
       >
         <Input
           id="password"
@@ -46,7 +46,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
         />
         <ArrowRotateRight
           size={28}
-          color={themeColor.borderColor}
+          color={themeColors.borderColor}
           onPress={() =>
             handleGeneratePassword(
               length,
@@ -75,7 +75,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
             <Text style={styles.label}>Numbers</Text>
             <Checkbox
               value={numbers}
-              color={themeColor.tint}
+              color={themeColors.tint}
               onValueChange={(value) => setNumbers(value)}
             />
           </View>
@@ -83,7 +83,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
             <Text style={styles.label}>Lowercase</Text>
             <Checkbox
               value={lowercase}
-              color={themeColor.tint}
+              color={themeColors.tint}
               onValueChange={(value) => setLowercase(value)}
             />
           </View>
@@ -95,9 +95,9 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
               step={1}
               minimumValue={6}
               maximumValue={20}
-              thumbTintColor={themeColor.tint}
-              minimumTrackTintColor={themeColor.tint}
-              maximumTrackTintColor={themeColor.text}
+              thumbTintColor={themeColors.tint}
+              minimumTrackTintColor={themeColors.tint}
+              maximumTrackTintColor={themeColors.text}
               onValueChange={(value) => setLength(value)}
             />
           </View>
@@ -105,7 +105,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
             <Text style={styles.label}>Symbols</Text>
             <Checkbox
               value={symbols}
-              color={themeColor.tint}
+              color={themeColors.tint}
               onValueChange={(value) => setSymbols(value)}
             />
           </View>
@@ -113,7 +113,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
             <Text style={styles.label}>Uppercase</Text>
             <Checkbox
               value={uppercase}
-              color={themeColor.tint}
+              color={themeColors.tint}
               onValueChange={(value) => setUppercase(value)}
             />
           </View>

@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const SearchPage = () => {
   const [searchedPassword, setSearchPassword] = useState("");
 
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   const { passwords } = usePasswords();
 
   const filteredPasswords = passwords.filter((password) => {
@@ -31,7 +31,7 @@ const SearchPage = () => {
           style={[
             styles.inputWrapper,
             {
-              backgroundColor: themeColor.cardBackground,
+              backgroundColor: themeColors.cardBackground,
             },
           ]}
         >
@@ -42,7 +42,7 @@ const SearchPage = () => {
             value={searchedPassword}
             onChangeText={setSearchPassword}
           />
-          <SearchNormal1 color={themeColor.text} />
+          <SearchNormal1 color={themeColors.text} />
         </View>
 
         {/* List of passwords */}

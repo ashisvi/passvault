@@ -17,14 +17,14 @@ export type ViewProps = ThemeProps & DefaultView["props"];
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const color = useThemeColor().text;
+  const color = useThemeColor().themeColors.text;
 
   return <DefaultText style={[{ color }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor().background;
+  const backgroundColor = useThemeColor().themeColors.background;
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }

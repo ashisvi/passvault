@@ -21,7 +21,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   setSwitchValue,
   customButton,
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   return (
     <Pressable onPress={() => !switchBtn && href && router.push(href)}>
@@ -31,16 +31,16 @@ const LinkButton: React.FC<LinkButtonProps> = ({
           customButton
         ) : switchBtn ? (
           <Switch
-            thumbColor={themeColor.tint}
+            thumbColor={themeColors.tint}
             trackColor={{
-              true: themeColor.tint,
-              false: themeColor.borderColor,
+              true: themeColors.tint,
+              false: themeColors.borderColor,
             }}
             value={switchValue}
             onValueChange={setSwitchValue}
           />
         ) : (
-          <ArrowRight2 color={themeColor.text} style={styles.icon} />
+          <ArrowRight2 color={themeColors.text} style={styles.icon} />
         )}
       </View>
     </Pressable>

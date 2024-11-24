@@ -11,7 +11,7 @@ import { StyleSheet } from "react-native";
 const ProfilePage = () => {
   const { user, logout } = useAuthStore();
   const [account, setAccount] = useState(user?._id);
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   const data: SelectItem = [
     {
@@ -35,7 +35,7 @@ const ProfilePage = () => {
           style={[
             styles.email,
             styles.text,
-            { color: themeColor.tabIconDefault },
+            { color: themeColors.tabIconDefault },
           ]}
         >
           {user?.email}
@@ -44,7 +44,7 @@ const ProfilePage = () => {
           onPress={() => {}}
           title="Edit Profile"
           variant="secondary"
-          style={[styles.button, { borderColor: themeColor.borderColor }]}
+          style={[styles.button, { borderColor: themeColors.borderColor }]}
         />
       </View>
 

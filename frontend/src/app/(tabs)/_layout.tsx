@@ -19,10 +19,10 @@ const TabBarIcon = ({
   focused: boolean;
   icon: React.ElementType;
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   return (
     <Icon
-      color={focused ? color : themeColor.text}
+      color={focused ? color : themeColors.text}
       size={28}
       variant={focused ? "Bold" : "Linear"}
     />
@@ -30,28 +30,28 @@ const TabBarIcon = ({
 };
 
 const TabsLayout = () => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   const screenOptions = {
     tabBarHideOnKeyboard: true,
-    headerTintColor: themeColor.text,
-    headerStyle: { backgroundColor: themeColor.background },
+    headerTintColor: themeColors.text,
+    headerStyle: { backgroundColor: themeColors.background },
     tabBarStyle: {
-      backgroundColor: themeColor.background,
+      backgroundColor: themeColors.background,
       height: 65,
-      borderTopColor: themeColor.borderColor,
+      borderTopColor: themeColors.borderColor,
       paddingTop: 4,
     },
     tabBarLabelStyle: { fontSize: 12, paddingTop: 4 },
     headerTitleAlign: "center" as "center",
     headerLeft: () => (
       <Link href="/setting/profile" style={{ marginLeft: 10 }}>
-        <User size={28} color={themeColor.text} />
+        <User size={28} color={themeColors.text} />
       </Link>
     ),
     headerRight: () => (
       <Link href="/new-password" style={{ marginRight: 10 }}>
-        <Add size={36} color={themeColor.text} />
+        <Add size={36} color={themeColors.text} />
       </Link>
     ),
   };

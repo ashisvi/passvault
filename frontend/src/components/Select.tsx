@@ -21,8 +21,10 @@ const Select: React.FC<SelectProps> = ({
   value,
   data,
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   const [isFocus, setIsFocus] = useState(false);
+
+  const handleChange = (item: SelectItem) => onChange(item.value);
 
   return (
     <View style={styles.container}>
@@ -30,17 +32,17 @@ const Select: React.FC<SelectProps> = ({
         style={[
           styles.dropdown,
           {
-            backgroundColor: themeColor?.cardBackground,
-            borderColor: isFocus ? themeColor.tint : themeColor.text,
+            backgroundColor: themeColors.cardBackground,
+            borderColor: isFocus ? themeColors.tint : themeColors.text,
           },
         ]}
         placeholderStyle={[
           styles.placeholderStyle,
-          { color: themeColor?.tabIconDefault },
+          { color: themeColors.tabIconDefault },
         ]}
         selectedTextStyle={[
           styles.selectedTextStyle,
-          { color: themeColor?.tabIconDefault },
+          { color: themeColors.tabIconDefault },
         ]}
         data={data}
         labelField="label"
@@ -49,7 +51,7 @@ const Select: React.FC<SelectProps> = ({
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
-        onChange={(item) => onChange(item.value)}
+        onChange={handleChange}
       />
     </View>
   );

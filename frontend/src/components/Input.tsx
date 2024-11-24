@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
   style,
   ...props
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   return (
     <TextInput
@@ -32,9 +32,9 @@ const Input: React.FC<InputProps> = ({
       style={[
         styles.input,
         style,
-        { borderColor: themeColor.borderColor, color: themeColor.text },
+        { borderColor: themeColors.borderColor, color: themeColors.text },
       ]}
-      placeholderTextColor={themeColor.borderColor}
+      placeholderTextColor={themeColors.borderColor}
       {...props}
     />
   );

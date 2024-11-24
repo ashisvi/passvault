@@ -9,7 +9,7 @@ import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 const NewPassword = () => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   const { addPassword } = usePasswords();
 
   const [websiteName, setWebsiteName] = useState("");
@@ -98,7 +98,7 @@ const NewPassword = () => {
         style={[
           styles.separator,
           {
-            backgroundColor: themeColor.borderColor,
+            backgroundColor: themeColors.borderColor,
           },
         ]}
       ></View>
@@ -132,7 +132,7 @@ const TextField: React.FC<TextFieldProps> = ({
   style,
   value,
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   return (
     <View style={styles.fieldGroup}>
@@ -146,7 +146,7 @@ const TextField: React.FC<TextFieldProps> = ({
         style={[
           styles.textInput,
           style,
-          { borderBottomColor: themeColor.borderColor },
+          { borderBottomColor: themeColors.borderColor },
         ]}
       />
     </View>

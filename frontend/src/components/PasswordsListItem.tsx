@@ -5,7 +5,7 @@ import { Image, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "./Themed";
 
 const PasswordsListItem = ({ password }: { password: Password }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   return (
     <View style={styles.card}>
@@ -16,12 +16,12 @@ const PasswordsListItem = ({ password }: { password: Password }) => {
       />
       <View style={styles.body}>
         <Text style={styles.website}>{password.websiteName}</Text>
-        <Text style={[styles.username, { color: themeColor.tabIconDefault }]}>
+        <Text style={[styles.username, { color: themeColors.tabIconDefault }]}>
           {password.username}
         </Text>
       </View>
       <Pressable>
-        <Copy size={24} color={themeColor.tabIconDefault} />
+        <Copy size={24} color={themeColors.tabIconDefault} />
       </Pressable>
     </View>
   );

@@ -5,11 +5,11 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 const SettingsLayout = () => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   const screenOptions = {
-    headerTintColor: themeColor.text,
-    headerStyle: { backgroundColor: themeColor.background },
+    headerTintColor: themeColors.text,
+    headerStyle: { backgroundColor: themeColors.background },
     headerTitleAlign: "center" as "center",
   };
 
@@ -22,12 +22,12 @@ const SettingsLayout = () => {
           ...screenOptions,
           headerLeft: () => (
             <Link href="/setting/profile">
-              <User size={28} color={themeColor.text} />
+              <User size={28} color={themeColors.text} />
             </Link>
           ),
           headerRight: () => (
             <Link href="/new-password">
-              <Add size={36} color={themeColor.text} />
+              <Add size={36} color={themeColors.text} />
             </Link>
           ),
         }}
@@ -39,12 +39,12 @@ const SettingsLayout = () => {
           title: "Profile",
           headerLeft: () => (
             <Link href="profile" style={{ marginLeft: 10 }}>
-              <User size={28} color={themeColor.text} variant="Bold" />
+              <User size={28} color={themeColors.text} variant="Bold" />
             </Link>
           ),
           headerRight: () => (
             <Link href="/new-password" style={{ marginRight: 10 }}>
-              <Add size={36} color={themeColor.text} />
+              <Add size={36} color={themeColors.text} />
             </Link>
           ),
         }}

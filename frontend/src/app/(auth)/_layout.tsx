@@ -5,7 +5,7 @@ import { router, Stack, usePathname } from "expo-router";
 import { Image, StyleSheet } from "react-native";
 
 const AuthLayout = () => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   const currentPath = usePathname();
 
   return (
@@ -24,11 +24,14 @@ const AuthLayout = () => {
         <View
           style={[
             styles.formContainer,
-            { borderColor: themeColor.borderColor },
+            { borderColor: themeColors.borderColor },
           ]}
         >
           <View
-            style={[styles.formHeader, { borderColor: themeColor.borderColor }]}
+            style={[
+              styles.formHeader,
+              { borderColor: themeColors.borderColor },
+            ]}
           >
             <Button
               title="Register"

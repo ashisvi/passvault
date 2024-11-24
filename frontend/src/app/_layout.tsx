@@ -8,7 +8,7 @@ import { useEffect } from "react";
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
   const [loaded, error] = useFonts({
     SpaceMono: require("@assets/fonts/SpaceMono-Regular.ttf"),
     MontserratBlack: require("@assets/fonts/Montserrat-Black.ttf"),
@@ -34,14 +34,14 @@ const RootLayout = () => {
 
   const screenOptions = {
     headerShown: true,
-    headerTintColor: themeColor.text,
-    headerStyle: { backgroundColor: themeColor.background },
+    headerTintColor: themeColors.text,
+    headerStyle: { backgroundColor: themeColors.background },
     headerTitleAlign: "center" as "center",
   };
 
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <StatusBar backgroundColor={themeColor.background} />
+      <StatusBar backgroundColor={themeColors.background} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="(auth)" />

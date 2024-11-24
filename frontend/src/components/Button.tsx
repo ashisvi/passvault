@@ -20,20 +20,20 @@ const Button: React.FC<ButtonProps> = ({
   style,
   buttonTextStyle,
 }) => {
-  const themeColor = useThemeColor();
+  const { themeColors } = useThemeColor();
 
   const buttonStyle =
     variant === "primary"
-      ? { ...styles.primaryButton, backgroundColor: themeColor.tint }
+      ? { ...styles.primaryButton, backgroundColor: themeColors.tint }
       : {
           ...styles.secondaryButton,
-          backgroundColor: themeColor.cardBackground,
+          backgroundColor: themeColors.cardBackground,
         };
 
   const textStyle =
     variant === "primary"
-      ? { color: themeColor.background }
-      : { color: themeColor.text };
+      ? { color: themeColors.background }
+      : { color: themeColors.text };
 
   return (
     <Pressable
