@@ -1,10 +1,22 @@
-import { Text, View } from "@/components/Themed";
-import { StyleSheet } from "react-native";
+import PasswordsListItem from "@/components/PasswordsListItem";
+import { View } from "@/components/Themed";
+import { usePasswords } from "@/hooks/usePasswords";
+import { Link } from "expo-router";
+import { FlatList, StyleSheet } from "react-native";
 
 const AnalysisPage = () => {
+  const { passwords } = usePasswords();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Analysis Page</Text>
+      <FlatList
+        data={passwords}
+        renderItem={({ item }) => (
+          <Link key={item._id} href={`/${item._id}`}>
+            <PasswordsListItem password={item} />
+          </Link>
+        )}
+      />
     </View>
   );
 };

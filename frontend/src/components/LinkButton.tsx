@@ -38,6 +38,10 @@ const LinkButton: React.FC<LinkButtonProps> = ({
             }}
             value={switchValue}
             onValueChange={setSwitchValue}
+            style={{
+              width: 50,
+              transform: [{ scale: 1.25 }],
+            }}
           />
         ) : (
           <ArrowRight2 color={themeColors.text} style={styles.icon} />
