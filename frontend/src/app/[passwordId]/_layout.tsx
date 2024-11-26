@@ -15,21 +15,28 @@ const PasswordLayout = () => {
         headerStyle: {
           backgroundColor: themeColors.background,
         },
-        headerLeft: () => (
-          <Pressable style={styles.backBtn} onPress={() => router.back()}>
-            <ArrowLeft color={themeColors.text} size={28} />
-            <Text style={styles.backBtnTxt}>Back</Text>
-          </Pressable>
-        ),
       }}
     >
       <Stack.Screen
         name="index"
         options={{
           headerRight: () => <Trash color="red" size={28} />,
+          headerLeft: () => (
+            <Pressable style={styles.backBtn} onPress={() => router.back()}>
+              <ArrowLeft color={themeColors.text} size={28} />
+              <Text style={styles.backBtnTxt}>Back</Text>
+            </Pressable>
+          ),
         }}
       />
-      <Stack.Screen name="edit-password" />
+      <Stack.Screen
+        name="modal"
+        options={{
+          presentation: "modal",
+          title: "Edit Password",
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack>
   );
 };

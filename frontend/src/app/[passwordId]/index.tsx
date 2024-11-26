@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import { Text, View } from "@/components/Themed";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { ArrowDown2 } from "iconsax-react-native";
 import { useState } from "react";
 import { Image, StyleSheet, Switch } from "react-native";
@@ -132,7 +132,12 @@ const PasswordPage = () => {
           />
           <Button
             title="Change password"
-            onPress={() => {}}
+            onPress={() => {
+              router.push({
+                pathname: `/${password._id}/modal`,
+                params: { ...password },
+              });
+            }}
             variant="secondary"
             style={[
               styles.button,

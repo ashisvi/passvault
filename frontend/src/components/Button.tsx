@@ -28,12 +28,13 @@ const Button: React.FC<ButtonProps> = ({
       : {
           ...styles.secondaryButton,
           backgroundColor: themeColors.cardBackground,
+          borderColor: themeColors.tint,
         };
 
   const textStyle =
     variant === "primary"
       ? { color: themeColors.background }
-      : { color: themeColors.text };
+      : { color: themeColors.tint };
 
   return (
     <Pressable
@@ -64,12 +65,13 @@ const styles = StyleSheet.create({
   secondaryButton: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 8,
+    paddingVertical: 9,
     paddingHorizontal: 16,
     borderRadius: 4,
     elevation: 15,
     flex: 1,
     maxHeight: 50,
+    borderWidth: 1,
   },
   buttonText: {
     fontSize: 16,
