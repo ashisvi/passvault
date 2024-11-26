@@ -5,7 +5,7 @@ import { Image, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "./Themed";
 
 const PasswordsListItem = ({ password }: { password: Password }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   return (
     <View style={styles.card}>

@@ -21,7 +21,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   setSwitchValue,
   customButton,
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   return (
     <Pressable onPress={() => !switchBtn && href && router.push(href)}>

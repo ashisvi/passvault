@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
   style,
   ...props
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   return (
     <TextInput

@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import useThemeColor from "@/hooks/useThemeColor";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
@@ -8,7 +9,8 @@ import { useEffect } from "react";
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
+
   const [loaded, error] = useFonts({
     SpaceMono: require("@assets/fonts/SpaceMono-Regular.ttf"),
     MontserratBlack: require("@assets/fonts/Montserrat-Black.ttf"),
@@ -40,20 +42,22 @@ const RootLayout = () => {
   };
 
   return (
-    <QueryClientProvider client={new QueryClient()}>
-      <StatusBar backgroundColor={themeColors.background} />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="(auth)" />
-        <Stack.Screen
-          name="new-password"
-          options={{
-            ...screenOptions,
-            title: "New password",
-          }}
-        />
-      </Stack>
-    </QueryClientProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={new QueryClient()}>
+        <StatusBar backgroundColor={themeColors.background} style="auto" />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen
+            name="new-password"
+            options={{
+              ...screenOptions,
+              title: "New password",
+            }}
+          />
+        </Stack>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

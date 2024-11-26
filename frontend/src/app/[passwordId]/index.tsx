@@ -8,7 +8,7 @@ import { useState } from "react";
 import { Image, StyleSheet, Switch } from "react-native";
 
 const PasswordPage = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
   const { passwordId } = useLocalSearchParams();
   const { passwords } = usePasswords();
 
@@ -60,7 +60,7 @@ const PasswordPage = () => {
             </View>
             <View style={styles.value}>
               <Link
-                href={password.websiteUrl}
+                href={`http://${password.websiteUrl}`}
                 style={[
                   styles.tableText,
                   { color: themeColors.tint, textDecorationLine: "underline" },

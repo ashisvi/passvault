@@ -21,7 +21,7 @@ const Select: React.FC<SelectProps> = ({
   value,
   data,
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
   const [isFocus, setIsFocus] = useState(false);
 
   const handleChange = (item: SelectItem) => onChange(item.value);

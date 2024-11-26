@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   style,
   buttonTextStyle,
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   const buttonStyle =
     variant === "primary"

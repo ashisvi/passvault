@@ -24,7 +24,7 @@ const GeneratePassword: React.FC<GeneratePasswordProps> = ({
   setPassword,
   handleGeneratePassword,
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
   const [length, setLength] = useState(8);
   const [numbers, setNumbers] = useState(true);
   const [lowercase, setLowercase] = useState(true);

@@ -5,7 +5,7 @@ import { router, Stack, usePathname } from "expo-router";
 import { Image, StyleSheet } from "react-native";
 
 const AuthLayout = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
   const currentPath = usePathname();
 
   return (

@@ -5,7 +5,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 
 const SettingsLayout = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   const screenOptions = {
     headerTintColor: themeColors.text,

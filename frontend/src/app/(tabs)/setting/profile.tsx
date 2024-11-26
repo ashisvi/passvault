@@ -11,7 +11,7 @@ import { StyleSheet } from "react-native";
 const ProfilePage = () => {
   const { user, logout } = useAuthStore();
   const [account, setAccount] = useState(user?._id);
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   const data: SelectItem = [
     {

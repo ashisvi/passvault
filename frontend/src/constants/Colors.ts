@@ -1,23 +1,23 @@
-const tintColorLight = "#1DA1F2"; // Twitter Blue
-const tintColorDark = "#1DA1F2"; // White
+const tintColorLight = "#1DA1F2";
+const tintColorDark = "#1DA1F2";
 
 export default {
   light: {
-    text: "#000000", // Black
-    background: "#FFFFFF", // White
+    text: "#000000",
+    background: "#FFFFFF",
     tint: tintColorLight,
-    tabIconDefault: "#CCCCCC", // Light Gray
+    tabIconDefault: "#CCCCCC",
     tabIconSelected: tintColorLight,
-    cardBackground: "#F5F8FA", // Light Gray for cards in light mode
-    borderColor: "#E1E8ED", // Light border color
+    cardBackground: "#F5F8FA",
+    borderColor: "#E1E8ED",
   },
   dark: {
-    text: "#FFFFFF", // White
-    background: "#14171A", // Dark Gray (Twitter's background)
+    text: "#FFFFFF",
+    background: "#14171A",
     tint: tintColorDark,
-    tabIconDefault: "#AAB8C2", // Light Gray for icons
+    tabIconDefault: "#AAB8C2",
     tabIconSelected: tintColorDark,
-    cardBackground: "#192734", // Darker shade for cards in dark mode
-    borderColor: "#657786", // Dark gray for borders
+    cardBackground: "#192734",
+    borderColor: "#657786",
   },
 };

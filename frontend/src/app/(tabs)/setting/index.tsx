@@ -1,12 +1,12 @@
 import LinkButton from "@/components/LinkButton";
 import Select from "@/components/Select";
 import { View } from "@/components/Themed";
-import useThemeColor from "@/hooks/useThemeColor";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 
 const SettingPage = () => {
-  const { theme, changeTheme } = useThemeColor();
+  const { theme, toggleTheme } = useTheme();
 
   const [sync, setSync] = useState(false);
   const [autoFill, setAutoFill] = useState(false);
@@ -20,11 +20,11 @@ const SettingPage = () => {
         customButton={
           <Select
             data={[
-              { label: "Default", value: "default" },
+              { label: "Default", value: "" },
               { label: "Dark", value: "dark" },
               { label: "Light", value: "light" },
             ]}
-            onChange={(value) => changeTheme(value)}
+            onChange={(value) => toggleTheme(value)}
             placeholder={theme}
             value={theme}
           />

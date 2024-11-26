@@ -9,7 +9,7 @@ import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 const NewPassword = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
   const { addPassword } = usePasswords();
 
   const [websiteName, setWebsiteName] = useState("");
@@ -132,7 +132,7 @@ const TextField: React.FC<TextFieldProps> = ({
   style,
   value,
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   return (
     <View style={styles.fieldGroup}>

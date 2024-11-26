@@ -5,7 +5,7 @@ import { ArrowLeft, Trash } from "iconsax-react-native";
 import { Pressable, StyleSheet } from "react-native";
 
 const PasswordLayout = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   return (
     <Stack

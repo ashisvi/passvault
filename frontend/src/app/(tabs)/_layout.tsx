@@ -19,7 +19,7 @@ const TabBarIcon = ({
   focused: boolean;
   icon: React.ElementType;
 }) => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
   return (
     <Icon
       color={focused ? color : themeColors.text}
@@ -30,7 +30,7 @@ const TabBarIcon = ({
 };
 
 const TabsLayout = () => {
-  const { themeColors } = useThemeColor();
+  const themeColors = useThemeColor();
 
   const screenOptions = {
     tabBarHideOnKeyboard: true,
