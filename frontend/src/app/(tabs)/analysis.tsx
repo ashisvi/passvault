@@ -1,4 +1,4 @@
-import PasswordsListItem from "@/components/PasswordsListItem";
+import AnalysisPasswordItem from "@/components/AnalysisPasswordItem";
 import { View } from "@/components/Themed";
 import { usePasswords } from "@/hooks/usePasswords";
 import { Link } from "expo-router";
@@ -13,9 +13,10 @@ const AnalysisPage = () => {
         data={passwords}
         renderItem={({ item }) => (
           <Link key={item._id} href={`/${item._id}`}>
-            <PasswordsListItem password={item} />
+            <AnalysisPasswordItem password={item} />
           </Link>
         )}
+        ItemSeparatorComponent={() => <View style={{ height: 5 }} />}
       />
     </View>
   );

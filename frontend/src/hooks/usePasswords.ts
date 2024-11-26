@@ -1,9 +1,9 @@
-import { passwordService } from "@/api/passwordService";
 import {
   CreatePasswordDTO,
   Password,
   UpdatePasswordDTO,
 } from "@/types/password";
+import { passwordService } from "@/utils/passwordService";
 import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 
 // Define query client

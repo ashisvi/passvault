@@ -1,4 +1,4 @@
-import { axiosInstance } from "@/api/axiosConfig";
+import { axiosInstance } from "@/utils/axiosConfig";
 import * as SecureStore from "expo-secure-store";
 import { create } from "zustand";
 
