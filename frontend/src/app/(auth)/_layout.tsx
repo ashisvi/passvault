@@ -1,5 +1,4 @@
-import Button from "@/components/Button";
-import { Text, View } from "@/components/Themed";
+import { Button, Text, View } from "@/components";
 import useThemeColor from "@/hooks/useThemeColor";
 import { router, Stack, usePathname } from "expo-router";
 import { Image, StyleSheet } from "react-native";

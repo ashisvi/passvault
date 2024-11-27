@@ -1,7 +1,6 @@
 import useThemeColor from "@/hooks/useThemeColor";
 import { Link, Stack } from "expo-router";
 import { Add, User } from "iconsax-react-native";
-import React from "react";
 import { StyleSheet } from "react-native";
 
 const SettingsLayout = () => {
@@ -38,7 +37,7 @@ const SettingsLayout = () => {
           ...screenOptions,
           title: "Profile",
           headerLeft: () => (
-            <Link href="profile" style={{ marginLeft: 10 }}>
+            <Link href="" style={{ marginLeft: 10 }}>
               <User size={28} color={themeColors.text} variant="Bold" />
             </Link>
           ),

@@ -1,7 +1,5 @@
-import Button from "@/components/Button";
-import LinkButton from "@/components/LinkButton";
-import Select, { SelectItem } from "@/components/Select";
-import { Text, View } from "@/components/Themed";
+import { Button, LinkButton, Select, Text, View } from "@/components";
+import { SelectItem } from "@/components/Select";
 import useThemeColor from "@/hooks/useThemeColor";
 import { useAuthStore } from "@/store/authStore";
 import { router } from "expo-router";

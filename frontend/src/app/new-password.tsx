@@ -1,7 +1,5 @@
-import Button from "@/components/Button";
-import GeneratePassword from "@/components/GeneratePassword";
-import Input, { type InputProps } from "@/components/Input";
-import { Text, View } from "@/components/Themed";
+import { Button, GeneratePassword, Input, Text, View } from "@/components";
+import { type InputProps } from "@/components/Input";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
 import { router } from "expo-router";

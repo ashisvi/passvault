@@ -1,5 +1,4 @@
-import Button from "@/components/Button";
-import { Text, View } from "@/components/Themed";
+import { Button, Text, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
 import { Link, router, useLocalSearchParams } from "expo-router";

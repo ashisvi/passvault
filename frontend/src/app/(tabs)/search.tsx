@@ -1,6 +1,4 @@
-import Input from "@/components/Input";
-import PasswordsList from "@/components/PasswordsList";
-import { View } from "@/components/Themed";
+import { Input, PasswordsList, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
 import { SearchNormal1 } from "iconsax-react-native";

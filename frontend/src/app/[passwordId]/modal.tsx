@@ -1,6 +1,4 @@
-import Button from "@/components/Button";
-import Input from "@/components/Input";
-import { Text, View } from "@/components/Themed";
+import { Button, Input, Text, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";

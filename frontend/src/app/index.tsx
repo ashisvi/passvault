@@ -6,10 +6,9 @@ import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
 const IndexPage = () => {
-  const { isAuthenticated, user, fetchUser, token, setAuthenticated } =
-    useAuthStore();
+  const { isAuthenticated, user, fetchUser, token } = useAuthStore();
 
-  console.log(user);
+  console.log("~ app/index.tsx ~ user : ", user);
 
   useEffect(() => {
     if (token) {

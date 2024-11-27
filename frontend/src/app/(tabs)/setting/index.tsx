@@ -1,6 +1,4 @@
-import LinkButton from "@/components/LinkButton";
-import Select from "@/components/Select";
-import { View } from "@/components/Themed";
+import { LinkButton, Select, View } from "@/components";
 import { useTheme } from "@/contexts/ThemeContext";
 import { useState } from "react";
 import { StyleSheet } from "react-native";

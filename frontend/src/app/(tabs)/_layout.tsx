@@ -8,7 +8,6 @@ import {
   ShieldSearch,
   User,
 } from "iconsax-react-native";
-import React from "react";
 
 const TabBarIcon = ({
   color,

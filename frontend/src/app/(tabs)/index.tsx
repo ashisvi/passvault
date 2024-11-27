@@ -1,5 +1,4 @@
-import PasswordsList from "@/components/PasswordsList";
-import { View } from "@/components/Themed";
+import { PasswordsList, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import { StyleSheet } from "react-native";
 
