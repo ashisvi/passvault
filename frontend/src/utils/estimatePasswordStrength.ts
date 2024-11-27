@@ -3,7 +3,7 @@ interface PasswordStrength {
   color: string;
 }
 
-const passwordStrengthEstimator = (password: string): PasswordStrength => {
+const estimatePasswordStrength = (password: string): PasswordStrength => {
   const strength = {
     label: "",
     color: "",
@@ -21,7 +21,7 @@ const passwordStrengthEstimator = (password: string): PasswordStrength => {
   } else if (length >= 8 && length < 12) {
     if (hasLowercase && hasUppercase && hasNumber) {
       strength.label = "Safe";
-      strength.color = "green";
+      strength.color = "#00FF00";
     } else {
       strength.label = "Weak";
       strength.color = "red";
@@ -29,7 +29,7 @@ const passwordStrengthEstimator = (password: string): PasswordStrength => {
   } else if (length >= 12) {
     if (hasLowercase && hasUppercase && hasNumber && hasSpecialChar) {
       strength.label = "Safe";
-      strength.color = "green";
+      strength.color = "#00FF00";
     } else {
       strength.label = "Risk";
       strength.color = "orange";
@@ -39,4 +39,4 @@ const passwordStrengthEstimator = (password: string): PasswordStrength => {
   return strength;
 };
 
-export default passwordStrengthEstimator;
+export default estimatePasswordStrength;

@@ -1,13 +1,27 @@
 import useThemeColor from "@/hooks/useThemeColor";
 import { Password } from "@/types/password";
-import passwordStrengthEstimator from "@/utils/passwordStrengthEstimator";
+import estimatePasswordStrength from "@/utils/estimatePasswordStrength";
 import { ArrowRight2 } from "iconsax-react-native";
+import { useEffect } from "react";
 import { Image, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "./Themed";
 
-const AnalysisPasswordItem = ({ password }: { password: Password }) => {
+const AnalysisPasswordItem = ({
+  password,
+  setCount,
+}: {
+  password: Password;
+  setCount: (value: any) => void;
+}) => {
   const themeColors = useThemeColor();
-  const passwordStrength = passwordStrengthEstimator(password.password);
+  const passwordStrength = estimatePasswordStrength(password.password);
+
+  useEffect(() => {
+    setCount((preCount: any) => ({
+      ...preCount,
+      [passwordStrength.label]: (preCount[passwordStrength.label] || 0) + 1,
+    }));
+  }, [passwordStrength.label, setCount]);
 
   return (
     <View style={styles.card}>
