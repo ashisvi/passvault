@@ -2,6 +2,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import useThemeColor from "@/hooks/useThemeColor";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
+import * as NavigationBar from "expo-navigation-bar";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -10,6 +11,7 @@ SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const themeColors = useThemeColor();
+  NavigationBar.setBackgroundColorAsync(themeColors.background);
 
   const [loaded, error] = useFonts({
     SpaceMono: require("@assets/fonts/SpaceMono-Regular.ttf"),
@@ -44,7 +46,7 @@ const RootLayout = () => {
   return (
     <ThemeProvider>
       <QueryClientProvider client={new QueryClient()}>
-        <StatusBar backgroundColor={themeColors.background} style="auto" />
+        <StatusBar backgroundColor={themeColors.background} />
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="(auth)" />

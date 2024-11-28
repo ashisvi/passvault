@@ -9,7 +9,7 @@ export default {
     tabIconDefault: "#CCCCCC",
     tabIconSelected: tintColorLight,
     cardBackground: "#F5F8FA",
-    borderColor: "#E1E8ED",
+    borderColor: "#B4B5B6",
   },
   dark: {
     text: "#FFFFFF",

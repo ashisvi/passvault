@@ -124,7 +124,6 @@ const PasswordPage = () => {
               styles.button,
               {
                 borderColor: themeColors.borderColor,
-                backgroundColor: "transparent",
               },
             ]}
             buttonTextStyle={styles.buttonTextStyle}
@@ -142,7 +141,6 @@ const PasswordPage = () => {
               styles.button,
               {
                 borderColor: themeColors.borderColor,
-                backgroundColor: "transparent",
               },
             ]}
             buttonTextStyle={styles.buttonTextStyle}
