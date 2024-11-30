@@ -27,7 +27,7 @@ app.use("/api", router);
 
 app.get("/", (req, res) => {
   res.render("index", {
-    title: "YourApp - Mobile Experience Reimagined",
+    title: "PassVault - Secure password manager",
     layout: "layout",
   });
 });

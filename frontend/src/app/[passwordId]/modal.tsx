@@ -1,5 +1,6 @@
 import { Button, Input, Text, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
+import { decryptPassword, encryptPassword } from "@/utils/encryption";
 import { router, useLocalSearchParams } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -8,11 +9,13 @@ const PasswordModal = () => {
   const params = useLocalSearchParams();
   const { updatePassword } = usePasswords();
 
+  const decryptedPassword = decryptPassword(params.password as string);
+
   const [isDisabled, setIsDisabled] = useState(false);
   const [websiteName, setWebsiteName] = useState(params.websiteName as string);
   const [username, setUsername] = useState(params.username as string);
   const [websiteUrl, setWebsiteUrl] = useState(params.websiteUrl as string);
-  const [password, setPassword] = useState(params.password as string);
+  const [password, setPassword] = useState(decryptedPassword);
 
   useEffect(() => {
     if (websiteName && username && websiteUrl && password) {
@@ -20,7 +23,7 @@ const PasswordModal = () => {
         websiteName === params.websiteName &&
         username === params.username &&
         websiteUrl === params.websiteUrl &&
-        password === params.password
+        password === decryptedPassword
       ) {
         setIsDisabled(false);
       }
@@ -30,11 +33,13 @@ const PasswordModal = () => {
   const handleUpdate = useCallback(async () => {
     if (isDisabled) return;
 
+    const encryptedPassword = encryptPassword(password);
+
     const updatedPassword = {
       websiteName,
       username,
       websiteUrl,
-      password,
+      password: encryptedPassword,
     };
 
     try {

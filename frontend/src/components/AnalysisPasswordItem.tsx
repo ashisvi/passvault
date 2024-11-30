@@ -1,5 +1,6 @@
 import useThemeColor from "@/hooks/useThemeColor";
 import { Password } from "@/types/password";
+import { decryptPassword } from "@/utils/encryption";
 import estimatePasswordStrength from "@/utils/estimatePasswordStrength";
 import { ArrowRight2 } from "iconsax-react-native";
 import { useEffect } from "react";
@@ -15,6 +16,8 @@ const AnalysisPasswordItem = ({
 }) => {
   const themeColors = useThemeColor();
   const passwordStrength = estimatePasswordStrength(password.password);
+
+  const decryptedPassword = decryptPassword(password.password);
 
   useEffect(() => {
     setCount((preCount: any) => ({
@@ -36,7 +39,7 @@ const AnalysisPasswordItem = ({
       <View style={styles.body}>
         <Text style={styles.website}>{password.websiteName}</Text>
         <Text style={[styles.username, { color: themeColors.tabIconDefault }]}>
-          {password.password}
+          {decryptedPassword}
         </Text>
 
         {/* Strength Bar */}

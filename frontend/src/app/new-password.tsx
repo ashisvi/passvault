@@ -2,6 +2,7 @@ import { Button, GeneratePassword, Input, Text, View } from "@/components";
 import { type InputProps } from "@/components/Input";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
+import { decryptPassword, encryptPassword } from "@/utils/encryption";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
@@ -50,12 +51,17 @@ const NewPassword = () => {
   );
 
   const handleSubmit = useCallback(async () => {
+    // Encrypt password
+    const encryptedPassword = encryptPassword(password);
+    console.log(encryptedPassword);
+    console.log(decryptPassword(encryptedPassword));
+
     // Handle form submission
     const passwordData = {
       websiteName,
       username,
       websiteUrl,
-      password,
+      password: encryptedPassword,
     };
 
     try {

@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthState>((set: any) => ({
         password,
       });
 
-      if (response.status === 200) {
+      if (response.status === 201) {
         const { token } = response.data;
         await SecureStore.setItemAsync("token", `Bearer ${token}`); // Store token in secure store
         set({ isAuthenticated: true, user: response.data.user });

@@ -1,6 +1,7 @@
 import { Button, Text, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
+import { decryptPassword } from "@/utils/encryption";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { ArrowDown2 } from "iconsax-react-native";
 import { useState } from "react";
@@ -16,6 +17,8 @@ const PasswordPage = () => {
   if (!password) {
     return null;
   }
+
+  const decryptedPassword = decryptPassword(password?.password);
 
   // Dummy code for switch button start
   const [isOn, setIsOn] = useState(false);
@@ -89,7 +92,7 @@ const PasswordPage = () => {
               <Text
                 style={[styles.tableText, { color: themeColors.borderColor }]}
               >
-                {password.password}
+                {decryptedPassword}
               </Text>
             </View>
           </View>
