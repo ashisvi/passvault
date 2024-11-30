@@ -19,6 +19,7 @@ const AnalysisPage = () => {
   const safePercent = useMemo(() => {
     const total = passwords.length;
     const percent = (count.Safe / total) * 100;
+    if (isNaN(percent)) return 0;
     return percent.toFixed(0);
   }, [count]);
 

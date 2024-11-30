@@ -43,7 +43,7 @@ const PasswordModal = () => {
     };
 
     try {
-      await updatePassword({ id: params._id, data: updatedPassword });
+      await updatePassword({ id: params._id as string, data: updatedPassword });
       router.back();
     } catch (error) {
       console.log(error);

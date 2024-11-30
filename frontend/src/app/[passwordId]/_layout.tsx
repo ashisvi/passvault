@@ -1,11 +1,37 @@
 import { Text } from "@/components/Themed";
+import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
-import { router, Stack } from "expo-router";
+import { passwordService } from "@/utils/passwordService";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import { ArrowLeft, Trash } from "iconsax-react-native";
+import { useMemo } from "react";
 import { Pressable, StyleSheet } from "react-native";
 
 const PasswordLayout = () => {
   const themeColors = useThemeColor();
+  const { passwordId } = useLocalSearchParams();
+  const { passwords } = usePasswords();
+
+  const password = useMemo(() => {
+    if (passwordId) {
+      const password = passwords.find(
+        (password) => password._id === passwordId
+      );
+
+      return password;
+    }
+  }, [passwordId, passwords]);
+
+  const handleDelete = async () => {
+    try {
+      if (passwordId) {
+        await passwordService.deletePassword(passwordId as string);
+        router.back();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Stack
@@ -20,7 +46,11 @@ const PasswordLayout = () => {
       <Stack.Screen
         name="index"
         options={{
-          headerRight: () => <Trash color="red" size={28} />,
+          headerRight: () => (
+            <Pressable onPress={handleDelete}>
+              <Trash color="red" size={28} />
+            </Pressable>
+          ),
           headerLeft: () => (
             <Pressable style={styles.backBtn} onPress={() => router.back()}>
               <ArrowLeft color={themeColors.text} size={28} />
