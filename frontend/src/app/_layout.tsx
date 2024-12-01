@@ -1,11 +1,15 @@
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { queryClient } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import * as Clipboard from "expo-clipboard";
 import { useFonts } from "expo-font";
 import * as NavigationBar from "expo-navigation-bar";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
+import { DevToolsBubble } from "react-native-react-query-devtools";
+import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -36,6 +40,15 @@ const RootLayout = () => {
     }
   }, [loaded]);
 
+  const onCopy = async (text: string) => {
+    try {
+      await Clipboard.setStringAsync(text);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   const screenOptions = {
     headerShown: true,
     headerTintColor: themeColors.text,
@@ -45,7 +58,7 @@ const RootLayout = () => {
 
   return (
     <ThemeProvider>
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <StatusBar backgroundColor={themeColors.background} />
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
@@ -58,6 +71,8 @@ const RootLayout = () => {
             }}
           />
         </Stack>
+        <Toast />
+        <DevToolsBubble onCopy={onCopy} />
       </QueryClientProvider>
     </ThemeProvider>
   );

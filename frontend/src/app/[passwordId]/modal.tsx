@@ -1,8 +1,9 @@
 import { Button, Input, Text, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import { decryptPassword, encryptPassword } from "@/utils/encryption";
+import showToast from "@/utils/showToast";
 import { router, useLocalSearchParams } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 const PasswordModal = () => {
@@ -11,27 +12,36 @@ const PasswordModal = () => {
 
   const decryptedPassword = decryptPassword(params.password as string);
 
-  const [isDisabled, setIsDisabled] = useState(false);
   const [websiteName, setWebsiteName] = useState(params.websiteName as string);
   const [username, setUsername] = useState(params.username as string);
   const [websiteUrl, setWebsiteUrl] = useState(params.websiteUrl as string);
   const [password, setPassword] = useState(decryptedPassword);
 
-  useEffect(() => {
-    if (websiteName && username && websiteUrl && password) {
-      if (
-        websiteName === params.websiteName &&
-        username === params.username &&
-        websiteUrl === params.websiteUrl &&
-        password === decryptedPassword
-      ) {
-        setIsDisabled(false);
-      }
-    }
-  }, [websiteName, username, websiteUrl, password]);
-
   const handleUpdate = useCallback(async () => {
-    if (isDisabled) return;
+    if (!websiteName || !username || !websiteUrl || !password) {
+      showToast(
+        "info",
+        "All fields are required",
+        "Please fill in all the fields"
+      );
+
+      return;
+    }
+
+    if (
+      websiteName === params.websiteName &&
+      username === params.username &&
+      websiteUrl === params.websiteUrl &&
+      password === decryptedPassword
+    ) {
+      showToast(
+        "info",
+        "No changes made.",
+        "Please make changes before saving."
+      );
+
+      return;
+    }
 
     const encryptedPassword = encryptPassword(password);
 
@@ -44,9 +54,15 @@ const PasswordModal = () => {
 
     try {
       await updatePassword({ id: params._id as string, data: updatedPassword });
-      router.back();
+
+      showToast("success", "Password updated successfully");
+
+      setTimeout(() => {
+        router.back();
+      }, 2000);
     } catch (error) {
       console.log(error);
+      showToast("error", "Something went wrong", error?.message);
     }
   }, [websiteName, username, websiteUrl, password]);
 
@@ -96,9 +112,8 @@ const PasswordModal = () => {
           }}
           variant="secondary"
           title="Discard"
-          disabled={isDisabled}
         />
-        <Button onPress={handleUpdate} title="Save" disabled={isDisabled} />
+        <Button onPress={handleUpdate} title="Save" />
       </View>
     </View>
   );

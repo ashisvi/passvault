@@ -1,5 +1,6 @@
 import { Button, Input, View } from "@/components";
 import { useAuthStore } from "@/store/authStore";
+import showToast from "@/utils/showToast";
 import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
@@ -15,9 +16,15 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await login(email, password);
-      router.replace("/(tabs)");
+
+      showToast("success", "Login successful");
+
+      setTimeout(() => {
+        router.replace("/(tabs)/home");
+      }, 1000);
     } catch (error) {
       console.log(error);
+      showToast("error", "Login failed", error?.message);
     }
   };
 

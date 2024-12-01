@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/utils/axiosConfig";
+import { AxiosError } from "axios";
 import * as SecureStore from "expo-secure-store";
 import { create } from "zustand";
 
@@ -40,6 +41,10 @@ export const useAuthStore = create<AuthState>((set: any) => ({
         throw new Error("Unable to register user");
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log("Error registering user:", error.response?.data?.message);
+        throw new Error(error.response?.data?.message);
+      }
       throw error;
     }
   },
@@ -60,6 +65,10 @@ export const useAuthStore = create<AuthState>((set: any) => ({
         throw new Error("Unable to login user");
       }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log("Error logging in user:", error.response?.data?.message);
+        throw new Error(error.response?.data?.message);
+      }
       throw error;
     }
   },

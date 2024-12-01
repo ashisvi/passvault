@@ -2,6 +2,7 @@ import { Text } from "@/components/Themed";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
 import { passwordService } from "@/utils/passwordService";
+import showToast from "@/utils/showToast";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { ArrowLeft, Trash } from "iconsax-react-native";
 import { useMemo } from "react";
@@ -23,13 +24,20 @@ const PasswordLayout = () => {
   }, [passwordId, passwords]);
 
   const handleDelete = async () => {
+    console.log(passwordId);
+
     try {
       if (passwordId) {
-        await passwordService.deletePassword(passwordId as string);
-        router.back();
+        await passwordService.deletePassword(password?._id as string);
+        showToast("success", "Password deleted successfully");
+
+        setTimeout(() => {
+          router.back();
+        }, 1000);
       }
     } catch (error) {
       console.log(error);
+      showToast("error", "Could not delete password", error?.message);
     }
   };
 

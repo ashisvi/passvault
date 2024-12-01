@@ -2,14 +2,15 @@ import { Button, GeneratePassword, Input, Text, View } from "@/components";
 import { type InputProps } from "@/components/Input";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
-import { decryptPassword, encryptPassword } from "@/utils/encryption";
+import { encryptPassword } from "@/utils/encryption";
+import showToast from "@/utils/showToast";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
 
 const NewPassword = () => {
   const themeColors = useThemeColor();
-  const { addPassword } = usePasswords();
+  const { addPassword, status } = usePasswords();
 
   const [websiteName, setWebsiteName] = useState("");
   const [username, setUsername] = useState("");
@@ -51,10 +52,14 @@ const NewPassword = () => {
   );
 
   const handleSubmit = useCallback(async () => {
+    if (!websiteName || !username || !websiteUrl || !password) {
+      showToast("info", "Please fill all the fields");
+
+      return;
+    }
+
     // Encrypt password
     const encryptedPassword = encryptPassword(password);
-    console.log(encryptedPassword);
-    console.log(decryptPassword(encryptedPassword));
 
     // Handle form submission
     const passwordData = {
@@ -66,9 +71,16 @@ const NewPassword = () => {
 
     try {
       await addPassword(passwordData);
-      router.push("/(tabs)");
+
+      showToast("success", "Password added successfully");
+
+      setTimeout(() => {
+        router.push("/(tabs)");
+      }, 3000);
     } catch (error) {
-      console.error(error);
+      console.log("~ new-password.tsx", error);
+
+      showToast("error", "Failed to add password", error?.message);
     }
   }, [websiteName, username, websiteUrl, password]);
 
