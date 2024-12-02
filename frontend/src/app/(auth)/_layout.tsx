@@ -1,7 +1,8 @@
 import { Button, Text, View } from "@/components";
 import useThemeColor from "@/hooks/useThemeColor";
 import { router, Stack, usePathname } from "expo-router";
-import { Image, StyleSheet } from "react-native";
+import { SecurityUser } from "iconsax-react-native";
+import { StyleSheet } from "react-native";
 
 const AuthLayout = () => {
   const themeColors = useThemeColor();
@@ -11,12 +12,11 @@ const AuthLayout = () => {
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.header}>
-          <Image
-            source={require("@assets/images/logo.png")}
-            style={styles.image}
-          />
+          <SecurityUser size={100} color={themeColors.tint} variant="Bulk" />
           <View style={styles.headerTexts}>
-            {/* <Text style={styles.heading}>PassVault</Text> */}
+            <Text style={[styles.heading, { color: themeColors.tint }]}>
+              PassVault
+            </Text>
             <Text style={styles.subHeading}>Secure Your Passwords</Text>
           </View>
         </View>
@@ -70,15 +70,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    height: 100,
-    width: 100,
+    height: 80,
+    width: 80,
   },
   headerTexts: {},
   heading: {
     textAlign: "center",
     fontWeight: "bold",
-    fontSize: 25,
-    fontFamily: "SpaceMono",
+    fontSize: 22,
+    fontFamily: "MontserratBold",
+    marginVertical: 5,
   },
   subHeading: {
     textAlign: "center",
@@ -95,7 +96,6 @@ const styles = StyleSheet.create({
   },
   formHeader: {
     borderWidth: 1,
-
     borderRadius: 10,
     padding: 10,
     flexDirection: "row",

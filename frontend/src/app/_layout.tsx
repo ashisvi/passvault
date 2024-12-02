@@ -8,7 +8,8 @@ import * as NavigationBar from "expo-navigation-bar";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { DevToolsBubble } from "react-native-react-query-devtools";
+
+// import { DevToolsBubble } from "react-native-react-query-devtools"; // commented for production
 import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
@@ -72,7 +73,8 @@ const RootLayout = () => {
           />
         </Stack>
         <Toast />
-        <DevToolsBubble onCopy={onCopy} />
+        {/* Commented for production */}
+        {/* <DevToolsBubble onCopy={onCopy} /> */}
       </QueryClientProvider>
     </ThemeProvider>
   );

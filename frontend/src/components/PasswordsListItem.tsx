@@ -1,5 +1,7 @@
 import useThemeColor from "@/hooks/useThemeColor";
 import { Password } from "@/types/password";
+import copyToClipboard from "@/utils/copyToClipboard";
+import { decryptPassword } from "@/utils/encryption";
 import { Copy } from "iconsax-react-native";
 import { Image, Pressable, StyleSheet } from "react-native";
 import { Text, View } from "./Themed";
@@ -21,7 +23,11 @@ const PasswordsListItem = ({ password }: { password: Password }) => {
         </Text>
       </View>
       <Pressable>
-        <Copy size={24} color={themeColors.tabIconDefault} />
+        <Copy
+          size={24}
+          color={themeColors.tabIconDefault}
+          onPress={() => copyToClipboard(decryptPassword(password.password))}
+        />
       </Pressable>
     </View>
   );

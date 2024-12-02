@@ -1,6 +1,7 @@
 import { Button, Text, View } from "@/components";
 import { usePasswords } from "@/hooks/usePasswords";
 import useThemeColor from "@/hooks/useThemeColor";
+import copyToClipboard from "@/utils/copyToClipboard";
 import { decryptPassword } from "@/utils/encryption";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { ArrowDown2 } from "iconsax-react-native";
@@ -121,7 +122,9 @@ const PasswordPage = () => {
         <View style={styles.buttons}>
           <Button
             title="Copy password"
-            onPress={() => {}}
+            onPress={() => {
+              copyToClipboard(decryptedPassword);
+            }}
             variant="secondary"
             style={[
               styles.button,

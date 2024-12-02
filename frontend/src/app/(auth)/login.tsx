@@ -20,7 +20,7 @@ const Login = () => {
       showToast("success", "Login successful");
 
       setTimeout(() => {
-        router.replace("/(tabs)/home");
+        router.replace("/(tabs)");
       }, 1000);
     } catch (error) {
       console.log(error);
