@@ -1,122 +1,102 @@
-import { HeaderRightBtn } from "@/components";
-import { icons } from "@/constants";
-import { Tabs } from "expo-router";
-import { Image, Text, View } from "react-native";
+import useThemeColor from "@/hooks/useThemeColor";
+import { Link, Tabs } from "expo-router";
+import {
+  Add,
+  Home3,
+  SearchNormal1,
+  Setting2,
+  ShieldSearch,
+  User,
+} from "iconsax-react-native";
 
-const TabIcon = ({
-  name,
-  icon,
+const TabBarIcon = ({
   color,
   focused,
+  icon: Icon,
 }: {
-  name: string;
-  icon: any;
   color: string;
   focused: boolean;
+  icon: React.ElementType;
 }) => {
+  const themeColors = useThemeColor();
   return (
-    <View className="flex justify-center items-center">
-      <Image
-        source={icon}
-        className="h-6 w-6"
-        resizeMode="contain"
-        style={{ tintColor: color }}
-      />
-      <Text
-        className={`${focused ? "font-bold" : "font-semibold"}`}
-        style={{ color: color }}
-      >
-        {name}
-      </Text>
-    </View>
+    <Icon
+      color={focused ? color : themeColors.text}
+      size={28}
+      variant={focused ? "Bold" : "Linear"}
+    />
   );
 };
 
 const TabsLayout = () => {
+  const themeColors = useThemeColor();
+
+  const screenOptions = {
+    tabBarHideOnKeyboard: true,
+    headerTintColor: themeColors.text,
+    headerStyle: { backgroundColor: themeColors.background },
+    tabBarStyle: {
+      backgroundColor: themeColors.background,
+      height: 65,
+      borderTopColor: themeColors.borderColor,
+      paddingTop: 4,
+    },
+    tabBarLabelStyle: { fontSize: 12, paddingTop: 4 },
+    headerTitleAlign: "center" as "center",
+    headerLeft: () => (
+      <Link href="/setting/profile" style={{ marginLeft: 10 }}>
+        <User size={28} color={themeColors.text} />
+      </Link>
+    ),
+    headerRight: () => (
+      <Link href="/new-password" style={{ marginRight: 10 }}>
+        <Add size={36} color={themeColors.text} />
+      </Link>
+    ),
+  };
+
   return (
-    <Tabs
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarActiveTintColor: "#9046CF",
-        tabBarInactiveTintColor: "#A6A6A6",
-        tabBarHideOnKeyboard: true,
-        tabBarStyle: {
-          backgroundColor: "#FEFEFE",
-          borderTopWidth: 1,
-          borderTopColor: "#FEFEFE",
-          height: 60,
-        },
-        headerStyle: {
-          height: 100,
-        },
-        headerShadowVisible: false,
-      }}
-    >
+    <Tabs initialRouteName="index" screenOptions={screenOptions}>
       <Tabs.Screen
-        name="home"
+        name="index"
         options={{
-          title: "Home",
-          headerStyle: {
-            backgroundColor: "rgba(144, 70, 207, 0.2)",
-          },
-          headerTitle: () => (
-            <View
-              className="px-3 py-1 rounded-full"
-              style={{
-                borderColor: "rgba(144, 70, 207, 0.2)",
-                borderWidth: 1,
-              }}
-            >
-              <Text className="text-[18px] font-bold text-textr">
-                PassVault
-              </Text>
-            </View>
-          ),
-          headerRight: () => <HeaderRightBtn />,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.home}
-              name="Home"
-              color={color}
-              focused={focused}
-            />
+          title: "Passwords",
+          tabBarIcon: ({ focused, color }) => (
+            <TabBarIcon focused={focused} icon={Home3} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="passwords"
+        name="search"
         options={{
-          title: "Home",
-          headerTitle: "Passwords",
           headerShown: false,
-          headerRight: () => <HeaderRightBtn />,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.shield}
-              name="Passwords"
-              color={color}
-              focused={focused}
-            />
+          title: "Search",
+          tabBarIcon: ({ focused, color }) => (
+            <TabBarIcon focused={focused} icon={SearchNormal1} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="analysis"
         options={{
-          title: "Home",
-          headerTitle: "Profile",
-          headerRight: () => <HeaderRightBtn />,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.user}
-              name="Profile"
-              color={color}
-              focused={focused}
-            />
+          title: "Security",
+          tabBarIcon: ({ focused, color }) => (
+            <TabBarIcon focused={focused} icon={ShieldSearch} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="setting"
+        options={{
+          headerShown: false,
+          title: "Setting",
+          tabBarIcon: ({ focused, color }) => (
+            <TabBarIcon focused={focused} icon={Setting2} color={color} />
           ),
         }}
       />
     </Tabs>
   );
 };
+
 export default TabsLayout;

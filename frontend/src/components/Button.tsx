@@ -1,27 +1,80 @@
-import { Pressable, Text } from "react-native";
+import useThemeColor from "@/hooks/useThemeColor";
+import React from "react";
+import { Pressable, StyleSheet } from "react-native";
+import { Text } from "./Themed";
 
 interface ButtonProps {
-  btnText?: string;
-  handleOnPress?: () => void;
-  isDisabled?: boolean;
+  title: string;
+  variant?: "primary" | "secondary";
+  onPress: () => void;
+  disabled?: boolean;
+  style?: any;
+  buttonTextStyle?: any;
 }
 
 const Button: React.FC<ButtonProps> = ({
-  btnText,
-  handleOnPress,
-  isDisabled,
+  title,
+  variant = "primary",
+  onPress,
+  disabled,
+  style,
+  buttonTextStyle,
 }) => {
+  const themeColors = useThemeColor();
+
+  const buttonStyle =
+    variant === "primary"
+      ? { ...styles.primaryButton, backgroundColor: themeColors.tint }
+      : {
+          ...styles.secondaryButton,
+          backgroundColor: themeColors.cardBackground,
+          borderColor: themeColors.tint,
+        };
+
+  const textStyle =
+    variant === "primary"
+      ? { color: themeColors.background }
+      : { color: themeColors.tint };
+
   return (
     <Pressable
-      className={`bg-primary/80 px-3 py-2 rounded-lg w-[150px] items-center justify-center mt-4 ${isDisabled && "bg-primary/50"}`}
-      onPress={handleOnPress}
-      disabled={isDisabled}
+      onPress={onPress}
+      disabled={disabled}
+      style={[buttonStyle, style]}
     >
-      <Text className="text-white font-semibold text-lg">
-        {btnText || "Submit"}
+      <Text style={[styles.buttonText, textStyle, buttonTextStyle]}>
+        {title}
       </Text>
     </Pressable>
   );
 };
 
 export default Button;
+
+const styles = StyleSheet.create({
+  primaryButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    elevation: 15,
+    flex: 1,
+    maxHeight: 50,
+  },
+  secondaryButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 9,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    elevation: 15,
+    flex: 1,
+    maxHeight: 50,
+    borderWidth: 1,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+});

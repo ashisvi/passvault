@@ -1,47 +1,82 @@
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { queryClient } from "@/hooks/usePasswords";
+import useThemeColor from "@/hooks/useThemeColor";
+import { QueryClientProvider } from "@tanstack/react-query";
+import * as Clipboard from "expo-clipboard";
 import { useFonts } from "expo-font";
-import { Slot, SplashScreen } from "expo-router";
+import * as NavigationBar from "expo-navigation-bar";
+import { SplashScreen, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { AuthProvider } from "./context/AuthContext";
 
-import * as SecureStore from 'expo-secure-store'
-import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo'
+// import { DevToolsBubble } from "react-native-react-query-devtools"; // commented for production
+import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
-  const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
+  const themeColors = useThemeColor();
+  NavigationBar.setBackgroundColorAsync(themeColors.background);
 
-  if (!publishableKey) {
-    throw new Error('Add EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY to your .env file')
-  }
-  const [fontsLoaded, error] = useFonts({
-    "Montserrat-Black": require("../../assets/fonts/Montserrat-Black.ttf"),
-    "Montserrat-Bold": require("../../assets/fonts/Montserrat-Bold.ttf"),
-    "Montserrat-ExtraBold": require("../../assets/fonts/Montserrat-ExtraBold.ttf"),
-    "Montserrat-ExtraLight": require("../../assets/fonts/Montserrat-ExtraLight.ttf"),
-    "Montserrat-Light": require("../../assets/fonts/Montserrat-Light.ttf"),
-    "Montserrat-Medium": require("../../assets/fonts/Montserrat-Medium.ttf"),
-    "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-    "Montserrat-SemiBold": require("../../assets/fonts/Montserrat-SemiBold.ttf"),
-    "Montserrat-Thin": require("../../assets/fonts/Montserrat-Thin.ttf"),
+  const [loaded, error] = useFonts({
+    SpaceMono: require("@assets/fonts/SpaceMono-Regular.ttf"),
+    MontserratBlack: require("@assets/fonts/Montserrat-Black.ttf"),
+    MontserratBold: require("@assets/fonts/Montserrat-Bold.ttf"),
+    MontserratExtraBold: require("@assets/fonts/Montserrat-ExtraBold.ttf"),
+    MontserratExtraLight: require("@assets/fonts/Montserrat-ExtraLight.ttf"),
+    MontserratLight: require("@assets/fonts/Montserrat-Light.ttf"),
+    MontserratMedium: require("@assets/fonts/Montserrat-Medium.ttf"),
+    MontserratRegular: require("@assets/fonts/Montserrat-Regular.ttf"),
+    MontserratSemiBold: require("@assets/fonts/Montserrat-SemiBold.ttf"),
+    MontserratThin: require("@assets/fonts/Montserrat-Thin.ttf"),
   });
 
   useEffect(() => {
     if (error) throw error;
+  }, [error]);
 
-    if (fontsLoaded) SplashScreen.hideAsync();
-  }, [fontsLoaded, error]);
+  useEffect(() => {
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
-  if (!fontsLoaded) return null;
+  const onCopy = async (text: string) => {
+    try {
+      await Clipboard.setStringAsync(text);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const screenOptions = {
+    headerShown: true,
+    headerTintColor: themeColors.text,
+    headerStyle: { backgroundColor: themeColors.background },
+    headerTitleAlign: "center" as "center",
+  };
 
   return (
-    <ClerkProvider publishableKey={publishableKey}>
-    <ClerkLoaded>
-    <AuthProvider>
-        <Slot />
-    </AuthProvider>
-    </ClerkLoaded>
-    </ClerkProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <StatusBar backgroundColor={themeColors.background} />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen
+            name="new-password"
+            options={{
+              ...screenOptions,
+              title: "New password",
+            }}
+          />
+        </Stack>
+        <Toast />
+        {/* Commented for production */}
+        {/* <DevToolsBubble onCopy={onCopy} /> */}
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

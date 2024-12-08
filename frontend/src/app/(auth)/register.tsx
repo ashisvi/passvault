@@ -1,88 +1,74 @@
-import { Button, CustomInput } from "@/components";
-import { Link } from "expo-router";
-import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import { useAuth } from "../context/AuthContext";
+import { Button, Input, View } from "@/components";
+import { useAuthStore } from "@/store/authStore";
+import showToast from "@/utils/showToast";
+import { router } from "expo-router";
+import { useState } from "react";
+import { StyleSheet } from "react-native";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [disabled, setDisabled] = useState(true);
 
-  const { onRegister, onLogin } = useAuth();
+  // register function from authStore
+  const { register } = useAuthStore();
 
-  const register = async () => {
-    const result = await onRegister(name, email, password);
+  // Handle register action
+  const handleRegister = async () => {
+    try {
+      await register(name, email, password);
 
-    if (result?.error) {
-      alert(result?.msg);
+      showToast("success", "Registration successful");
+
+      setTimeout(() => {
+        router.replace("/(auth)/login");
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+      showToast("error", "Registration failed", error?.message);
     }
-
-    onLogin(email, password);
   };
 
-  useEffect(() => {
-    if (
-      name &&
-      email &&
-      password &&
-      confirmPassword &&
-      password === confirmPassword
-    ) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, [name, email, password, confirmPassword]);
-
   return (
-    <View className="flex-1 justify-center items-center">
-      <View className="bg-grey/20 w-[90%] rounded-lg p-5 justify-between items-center">
-        <Text className="text-primary text-2xl font-bold mb-5">Register</Text>
-        <View className="w-full py-3">
-          <CustomInput
-            placeholder="Full name"
-            type="text"
-            value={name}
-            setValue={setName}
-          />
-        </View>
-        <View className="w-full py-3">
-          <CustomInput
-            placeholder="Email"
-            type="email"
-            value={email}
-            setValue={setEmail}
-          />
-        </View>
-        <View className="w-full py-3">
-          <CustomInput
-            placeholder="Password"
-            password
-            value={password}
-            setValue={setPassword}
-          />
-        </View>
-        <View className="w-full py-3">
-          <CustomInput
-            placeholder="Confirm password"
-            password
-            value={confirmPassword}
-            setValue={setConfirmPassword}
-          />
-        </View>
-        <Button handleOnPress={register} isDisabled={disabled} />
-        <Text className="mt-3">
-          Already registered?
-          <Link href="login" className="text-secondary">
-            <Text> Login</Text>
-          </Link>
-        </Text>
+    <View style={styles.container}>
+      <View style={{ width: "100%" }}>
+        <Input
+          placeholder="Full name"
+          id="name"
+          value={name}
+          onChangeText={setName}
+        />
+        <Input
+          placeholder="Email"
+          id="email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <Input
+          placeholder="Password"
+          id="password"
+          isPassword
+          value={password}
+          onChangeText={setPassword}
+        />
       </View>
+      <Button
+        title="Register"
+        onPress={handleRegister}
+        disabled={false}
+        style={{ width: "100%" }}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 20,
+  },
+});
 
 export default Register;
