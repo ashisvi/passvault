@@ -1,21 +1,21 @@
-import { Button, GeneratePassword, Input, Text, View } from "@/components";
-import { type InputProps } from "@/components/Input";
-import { usePasswords } from "@/hooks/usePasswords";
-import useThemeColor from "@/hooks/useThemeColor";
-import { encryptPassword } from "@/utils/encryption";
-import showToast from "@/utils/showToast";
-import { router } from "expo-router";
-import { useCallback, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Button, GeneratePassword, Input, Text, View } from '@/components';
+import { type InputProps } from '@/components/Input';
+import { usePasswords } from '@/hooks/usePasswords';
+import useThemeColor from '@/hooks/useThemeColor';
+import { encryptPassword } from '@/utils/encryption';
+import showToast from '@/utils/showToast';
+import { router } from 'expo-router';
+import { useCallback, useState } from 'react';
+import { StyleSheet } from 'react-native';
 
 const NewPassword = () => {
   const themeColors = useThemeColor();
   const { addPassword, status } = usePasswords();
 
-  const [websiteName, setWebsiteName] = useState("");
-  const [username, setUsername] = useState("");
-  const [websiteUrl, setWebsiteUrl] = useState("");
-  const [password, setPassword] = useState("");
+  const [websiteName, setWebsiteName] = useState('');
+  const [username, setUsername] = useState('');
+  const [websiteUrl, setWebsiteUrl] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleGeneratePassword = useCallback(
     (
@@ -25,20 +25,20 @@ const NewPassword = () => {
       uppercase: boolean,
       symbols: boolean
     ) => {
-      const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
-      const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      const numberChars = "0123456789";
-      const symbolChars = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+      const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+      const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const numberChars = '0123456789';
+      const symbolChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
       // Create the character set based on the selected options
-      let chars = "";
+      let chars = '';
       if (lowercase) chars += lowercaseChars;
       if (uppercase) chars += uppercaseChars;
       if (numbers) chars += numberChars;
       if (symbols) chars += symbolChars;
 
       // Initialize the password
-      let password = "";
+      let password = '';
 
       // Generate password
       for (let i = 0; i < length; i++) {
@@ -53,7 +53,7 @@ const NewPassword = () => {
 
   const handleSubmit = useCallback(async () => {
     if (!websiteName || !username || !websiteUrl || !password) {
-      showToast("info", "Please fill all the fields");
+      showToast('info', 'Please fill all the fields');
 
       return;
     }
@@ -72,15 +72,15 @@ const NewPassword = () => {
     try {
       await addPassword(passwordData);
 
-      showToast("success", "Password added successfully");
+      showToast('success', 'Password added successfully');
 
       setTimeout(() => {
-        router.push("/(tabs)");
+        router.push('/(tabs)');
       }, 3000);
     } catch (error) {
-      console.log("~ new-password.tsx", error);
+      console.log('~ new-password.tsx', error);
 
-      showToast("error", "Failed to add password", error?.message);
+      showToast('error', 'Failed to add password', error?.message);
     }
   }, [websiteName, username, websiteUrl, password]);
 
@@ -116,8 +116,7 @@ const NewPassword = () => {
           {
             backgroundColor: themeColors.borderColor,
           },
-        ]}
-      ></View>
+        ]}></View>
 
       {/* Password field */}
       <GeneratePassword
@@ -128,7 +127,13 @@ const NewPassword = () => {
 
       {/* Buttons */}
       <View style={styles.buttons}>
-        <Button onPress={() => {}} title="Generate" variant="secondary" />
+        <Button
+          onPress={() => {
+            // TODO: make this button functional
+          }}
+          title="Generate"
+          variant="secondary"
+        />
         <Button onPress={handleSubmit} title="Save" />
       </View>
     </View>
@@ -159,11 +164,7 @@ const TextField: React.FC<TextFieldProps> = ({
         value={value}
         onChangeText={onChangeText}
         isPassword={isPassword}
-        style={[
-          styles.textInput,
-          style,
-          { borderBottomColor: themeColors.borderColor },
-        ]}
+        style={[styles.textInput, style, { borderBottomColor: themeColors.borderColor }]}
       />
     </View>
   );
@@ -174,37 +175,37 @@ export default NewPassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     padding: 20,
   },
   fieldGroup: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     gap: 20,
-    width: "100%",
+    width: '100%',
     marginVertical: 5,
   },
   label: {
     fontSize: 18,
-    fontWeight: "semibold",
+    fontWeight: 'semibold',
   },
   textInput: {
     borderWidth: 0,
     borderBottomWidth: 1,
     paddingVertical: 4,
     paddingHorizontal: 5,
-    width: "65%",
+    width: '65%',
     fontSize: 18,
   },
   separator: {
     height: 1,
-    width: "100%",
+    width: '100%',
     marginVertical: 15,
   },
   buttons: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
     marginVertical: 20,
   },

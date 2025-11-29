@@ -1,8 +1,8 @@
-import { Button, Text, View } from "@/components";
-import useThemeColor from "@/hooks/useThemeColor";
-import { router, Stack, usePathname } from "expo-router";
-import { SecurityUser } from "iconsax-react-native";
-import { StyleSheet } from "react-native";
+import { Button, Text, View } from '@/components';
+import useThemeColor from '@/hooks/useThemeColor';
+import { router, Stack, usePathname } from 'expo-router';
+import { SecurityUser } from 'iconsax-react-native';
+import { StyleSheet } from 'react-native';
 
 const AuthLayout = () => {
   const themeColors = useThemeColor();
@@ -14,37 +14,25 @@ const AuthLayout = () => {
         <View style={styles.header}>
           <SecurityUser size={100} color={themeColors.tint} variant="Bulk" />
           <View style={styles.headerTexts}>
-            <Text style={[styles.heading, { color: themeColors.tint }]}>
-              PassVault
-            </Text>
+            <Text style={[styles.heading, { color: themeColors.tint }]}>PassVault</Text>
             <Text style={styles.subHeading}>Secure Your Passwords</Text>
           </View>
         </View>
-        <View
-          style={[
-            styles.formContainer,
-            { borderColor: themeColors.borderColor },
-          ]}
-        >
-          <View
-            style={[
-              styles.formHeader,
-              { borderColor: themeColors.borderColor },
-            ]}
-          >
+        <View style={[styles.formContainer, { borderColor: themeColors.borderColor }]}>
+          <View style={[styles.formHeader, { borderColor: themeColors.borderColor }]}>
             <Button
               title="Register"
-              onPress={() => router.push("/register")}
-              variant={currentPath === "/register" ? "primary" : "secondary"}
+              onPress={() => router.push('/register')}
+              variant={currentPath === '/register' ? 'primary' : 'secondary'}
             />
             <Button
               title="Login"
-              onPress={() => router.push("/login")}
-              variant={currentPath === "/login" ? "primary" : "secondary"}
+              onPress={() => router.push('/login')}
+              variant={currentPath === '/login' ? 'primary' : 'secondary'}
             />
           </View>
           <View style={styles.formContents}>
-            <Stack screenOptions={{ headerShown: false, animation: "fade" }}>
+            <Stack screenOptions={{ headerShown: false, animation: 'fade' }}>
               <Stack.Screen name="register" />
               <Stack.Screen name="login" />
             </Stack>
@@ -58,16 +46,16 @@ const AuthLayout = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   wrapper: {
-    height: "80%",
-    width: "90%",
+    height: '80%',
+    width: '90%',
   },
   header: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     height: 80,
@@ -75,15 +63,15 @@ const styles = StyleSheet.create({
   },
   headerTexts: {},
   heading: {
-    textAlign: "center",
-    fontWeight: "bold",
+    textAlign: 'center',
+    fontWeight: 'bold',
     fontSize: 22,
-    fontFamily: "MontserratBold",
+    fontFamily: 'MontserratBold',
     marginVertical: 5,
   },
   subHeading: {
-    textAlign: "center",
-    fontFamily: "MontserratSemiBold",
+    textAlign: 'center',
+    fontFamily: 'MontserratSemiBold',
     fontSize: 16,
   },
   formContainer: {
@@ -98,9 +86,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 10,
-    width: "100%",
+    width: '100%',
   },
   formContents: {
     flex: 1,
