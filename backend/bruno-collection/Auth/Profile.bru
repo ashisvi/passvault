@@ -1,0 +1,15 @@
+meta {
+  name: Profile
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{api_url}}/auth/profile
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{process.env.JWT_TOKEN}}
+}
