@@ -1,0 +1,14 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "devDependencies": {
+        "@types/react-native-crypto-js": "^1.0.3",
+      },
+    },
+  },
+  "packages": {
+    "@types/react-native-crypto-js": ["@types/react-native-crypto-js@1.0.3", "", {}, "sha512-RrXgp58Lf8cfj5fLJoSHecSG+L87t1o5g5XwOHqgSpj18CtRUuwYKWFobqMK1nivTidcTveQG9lJDUUV7rJv8A=="],
+  }
+}

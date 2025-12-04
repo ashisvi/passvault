@@ -1,13 +1,6 @@
-import useThemeColor from "@/hooks/useThemeColor";
-import { Link, Tabs } from "expo-router";
-import {
-  Add,
-  Home3,
-  SearchNormal1,
-  Setting2,
-  ShieldSearch,
-  User,
-} from "iconsax-react-native";
+import useThemeColor from '@/hooks/useThemeColor';
+import { Link, Tabs } from 'expo-router';
+import { Add, Home3, SearchNormal1, Setting2, ShieldSearch, User } from 'iconsax-react-native';
 
 const TabBarIcon = ({
   color,
@@ -23,7 +16,7 @@ const TabBarIcon = ({
     <Icon
       color={focused ? color : themeColors.text}
       size={28}
-      variant={focused ? "Bold" : "Linear"}
+      variant={focused ? 'Bold' : 'Linear'}
     />
   );
 };
@@ -37,12 +30,12 @@ const TabsLayout = () => {
     headerStyle: { backgroundColor: themeColors.background },
     tabBarStyle: {
       backgroundColor: themeColors.background,
-      height: 65,
+      height: 100,
       borderTopColor: themeColors.borderColor,
       paddingTop: 4,
     },
     tabBarLabelStyle: { fontSize: 12, paddingTop: 4 },
-    headerTitleAlign: "center" as "center",
+    headerTitleAlign: 'center' as 'center',
     headerLeft: () => (
       <Link href="/setting/profile" style={{ marginLeft: 10 }}>
         <User size={28} color={themeColors.text} />
@@ -60,7 +53,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Passwords",
+          title: 'Passwords',
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={Home3} color={color} />
           ),
@@ -70,7 +63,7 @@ const TabsLayout = () => {
         name="search"
         options={{
           headerShown: false,
-          title: "Search",
+          title: 'Search',
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={SearchNormal1} color={color} />
           ),
@@ -79,7 +72,7 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="analysis"
         options={{
-          title: "Security",
+          title: 'Security',
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={ShieldSearch} color={color} />
           ),
@@ -89,7 +82,7 @@ const TabsLayout = () => {
         name="setting"
         options={{
           headerShown: false,
-          title: "Setting",
+          title: 'Setting',
           tabBarIcon: ({ focused, color }) => (
             <TabBarIcon focused={focused} icon={Setting2} color={color} />
           ),

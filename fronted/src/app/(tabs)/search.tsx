@@ -1,22 +1,20 @@
-import { Input, PasswordsList, View } from "@/components";
-import { usePasswords } from "@/hooks/usePasswords";
-import useThemeColor from "@/hooks/useThemeColor";
-import { SearchNormal1 } from "iconsax-react-native";
-import { useState } from "react";
-import { StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Input, PasswordsList, View } from '@/components';
+import { usePasswords } from '@/hooks/usePasswords';
+import useThemeColor from '@/hooks/useThemeColor';
+import { SearchNormal1 } from 'iconsax-react-native';
+import { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SearchPage = () => {
-  const [searchedPassword, setSearchPassword] = useState("");
+  const [searchedPassword, setSearchPassword] = useState('');
 
   const themeColors = useThemeColor();
   const { passwords } = usePasswords();
 
   const filteredPasswords = passwords.filter((password) => {
     return (
-      password.websiteName
-        .toLowerCase()
-        .includes(searchedPassword.toLowerCase()) ||
+      password.websiteName.toLowerCase().includes(searchedPassword.toLowerCase()) ||
       password.username.toLowerCase().includes(searchedPassword.toLowerCase())
     );
   });
@@ -31,8 +29,7 @@ const SearchPage = () => {
             {
               backgroundColor: themeColors.cardBackground,
             },
-          ]}
-        >
+          ]}>
           <Input
             id="search"
             placeholder="Search here..."
@@ -57,17 +54,18 @@ export default SearchPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
   inputWrapper: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 5,
     paddingHorizontal: 15,
+    position: 'relative',
     paddingVertical: 5,
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     marginHorizontal: 15,
     marginVertical: 10,
   },
@@ -76,10 +74,10 @@ const styles = StyleSheet.create({
     marginBottom: 0,
     paddingLeft: 0,
     flex: 1,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   list: {
     flex: 1,
-    width: "100%",
+    width: '100%',
   },
 });
