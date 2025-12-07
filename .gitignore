@@ -1,55 +1,7 @@
-node_modules/
-.expo/
-dist/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-# expo router
-expo-env.d.ts
-
-
-
-ios
-android
-
-# macOS
-.DS_Store
-
-# Temporary files created by Metro to check the health of the file watcher
-.metro-health-check*
-
-# dependencies
-/node_modules
-
-# build artifacts
-/dist
-/build
-
-# editor directories and files
-.vscode
-*.sublime-workspace
-
-# environment variables
-.env
-
-# log files
-logs
-*.log
-
-# operating system files
-.DS_Store
-.local
-.Spotlight-V100
-.Trashes
-
-# system files
-thumbs.db
-.vercel
-
+*/node_modules
 
 */.env
+
+*.log
+
+*.env.local

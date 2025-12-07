@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "react-native-quick-crypto": "^1.0.0"
-  },
-  "devDependencies": {
-    "@types/react-native-crypto-js": "^1.0.3"
-  }
-}
