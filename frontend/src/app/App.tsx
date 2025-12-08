@@ -1,16 +1,10 @@
+import CreateVault from "@/components/CreateVault";
+import UnlockScreen from "@/components/UnlockScreen";
 import "@/global.css";
 import * as CryptoES from "crypto-es";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ActivityIndicator, Alert, Image, Text, View } from "react-native";
 
 export default function App() {
   const [masterPassword, setMasterPassword] = useState("");
@@ -19,11 +13,15 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // (async () => SecureStore.deleteItemAsync("masterPassword"))();
     checkIfFirstTime();
   }, []);
 
   const checkIfFirstTime = async () => {
     const hasSetPassword = await SecureStore.getItemAsync("masterPassword");
+
+    // Debug logs
+    console.log("Stored Mastered Passowrd:", hasSetPassword);
 
     if (hasSetPassword) {
       // Vault exists -> ask for password to unlock
@@ -104,70 +102,44 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView className="">
+    <View className="h-full">
       {/* If loading -> show indicator */}
       {isLoading && <ActivityIndicator size="large" color="#00ff9d" />}
 
       {/* If Unlocked -> show main app */}
       {!isUnlocked ? (
-        <View className="p-5">
+        <View className="p-5 flex-1 justify-center items-center py-20">
+          <Image source={require("@/assets/logo.png")} />
+          <Text className="text-3xl font-bold text-center text-sky-500 mb-5">
+            PassVault
+          </Text>
           {!storedMasterPassword ? (
             <>
               {/* If master password is not created -> Create vault screen */}
-              <Text className="text-3xl font-bold text-center">PassVault</Text>
-              <Text className="">
-                {masterPassword
-                  ? "Create your master password"
-                  : "Re-enter to confirm"}
-              </Text>
-
-              <TextInput
-                className="border border-amber-900 p-2 my-4 rounded"
-                secureTextEntry
-                placeholder="Master password (min 8 chars)"
-                value={masterPassword}
-                onChangeText={setMasterPassword}
-                autoFocus
+              <CreateVault
+                masterPassword={masterPassword}
+                createVault={createVault}
+                isLoading={isLoading}
+                setMasterPassword={setMasterPassword}
               />
-
-              <TouchableOpacity
-                className=""
-                onPress={createVault}
-                disabled={masterPassword.length < 8 || isLoading}
-              >
-                <Text className="">
-                  {masterPassword === "" ? "Create Vault" : "Confirm & Create"}
-                </Text>
-              </TouchableOpacity>
-
-              <Text className="">
-                This password can NEVER be recovered if forgotten!
-              </Text>
             </>
           ) : (
             <>
               {/* If vault is created -> Enter password to unlock */}
-
-              <Text className="">Enter master password to unlock</Text>
-
-              <TextInput
-                className="border border-amber-900 p-2 my-4 rounded"
-                secureTextEntry
-                placeholder="Master password"
-                value={masterPassword}
-                onChangeText={setMasterPassword}
-                autoFocus
+              <UnlockScreen
+                isLoading={isLoading}
+                masterPassword={masterPassword}
+                setMasterPassword={setMasterPassword}
+                unlockVault={unlockVault}
               />
-
-              <TouchableOpacity
-                className="bg-blue-400 px-5 py-2 rounded-xl flex justify-center items-center"
-                onPress={unlockVault.bind(null, masterPassword)}
-                disabled={masterPassword.length < 8 || isLoading}
-              >
-                <Text className="text-xl text-white font-bold">Unlock</Text>
-              </TouchableOpacity>
             </>
           )}
+          <View>
+            <Text className="text-center mt-4 text-gray-600">
+              Make sure to remember your master password. It cannot be recovered
+              if forgotten!
+            </Text>
+          </View>
         </View>
       ) : (
         <View className="p-5 flex justify-center items-center h-full">
@@ -177,6 +149,6 @@ export default function App() {
           </Text>
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
