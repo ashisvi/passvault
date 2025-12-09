@@ -10,23 +10,23 @@ const UnlockScreen: React.FC<{
   isLoading: boolean;
 }> = ({ masterPassword, setMasterPassword, unlockVault, isLoading }) => {
   return (
-    <View className="justify-center items-center w-full h-1/2 bg-white">
-      <Text className="text-lg font-medium">
+    <View className="w-full max-w-md">
+      <Text className="text-xl font-semibold text-gray-200 text-center mb-8">
         Enter master password to unlock
       </Text>
 
       <Input
-        className="mt-2"
-        secureTextEntry={true}
+        secureTextEntry
         placeholder="Master password"
         value={masterPassword}
         setValue={setMasterPassword}
+        className="mb-8"
       />
 
       <Button
-        onPress={unlockVault.bind(null, masterPassword)}
+        onPress={() => unlockVault(masterPassword)}
         isDisabled={masterPassword.length < 8 || isLoading}
-        btnText="Enter"
+        btnText="Unlock Vault"
       />
     </View>
   );

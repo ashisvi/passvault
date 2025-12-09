@@ -10,25 +10,29 @@ const CreateVault: React.FC<{
   isLoading: boolean;
 }> = ({ masterPassword, createVault, isLoading, setMasterPassword }) => {
   return (
-    <View className="justify-center items-center w-full h-1/2 bg-white">
-      <Text className="text-lg font-medium">Create your master password</Text>
+    <View className="w-full max-w-md">
+      <Text className="text-xl font-semibold text-gray-200 text-center mb-6">
+        Create your master password
+      </Text>
 
       <Input
-        className="mt-2 mb-5"
         placeholder="Master password (min 8 chars)"
         value={masterPassword}
         setValue={setMasterPassword}
         secureTextEntry
+        className="mb-4"
       />
 
-      <Text className="text-lg font-medium">Re-enter master password</Text>
+      <Text className="text-xl font-semibold text-gray-200 text-center mb-4">
+        Re-enter master password
+      </Text>
 
       <Input
-        className="mt-2"
         placeholder="Confirm master password"
         value={masterPassword}
         setValue={setMasterPassword}
         secureTextEntry
+        className="mb-8"
       />
 
       <Button

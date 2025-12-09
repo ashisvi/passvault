@@ -13,18 +13,15 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // (async () => SecureStore.deleteItemAsync("masterPassword"))();
     checkIfFirstTime();
   }, []);
 
   const checkIfFirstTime = async () => {
+    // (async () => await SecureStore.deleteItemAsync("masterPassword"))();
     const hasSetPassword = await SecureStore.getItemAsync("masterPassword");
-
-    // Debug logs
-    console.log("Stored Mastered Passowrd:", hasSetPassword);
+    console.log("Stored Master Password:", hasSetPassword);
 
     if (hasSetPassword) {
-      // Vault exists -> ask for password to unlock
       setStoredMasterPassword(hasSetPassword);
     }
   };
@@ -35,12 +32,12 @@ export default function App() {
         "Weak password",
         "Password must be at least 8 characters long."
       );
+      return;
     }
 
     setIsLoading(true);
 
     try {
-      // Derive a strong 256-bit key using PBKDF2 (much better than plain SHA-256)
       const salt = CryptoES.WordArray.random(128 / 8).toString();
       const key = CryptoES.PBKDF2(masterPassword, salt, {
         keySize: 256 / 32,
@@ -55,6 +52,7 @@ export default function App() {
         "Your secure vault has been created successfully!"
       );
       setMasterPassword("");
+      setIsUnlocked(true); // Auto-unlock after creation
     } catch (error) {
       Alert.alert("Error", "Failed to create vault. Please try again.");
     } finally {
@@ -80,14 +78,12 @@ export default function App() {
         return;
       }
 
-      // Re-derive the key from entered password + saved salt
       const derivedKey = CryptoES.PBKDF2(enteredPassword, salt, {
         keySize: 256 / 32,
         iterations: 1000,
       }).toString();
 
       if (derivedKey === storedKey) {
-        // Success -> Unlock the app
         setIsUnlocked(true);
       } else {
         Alert.alert("Wrong Password", "Try again", [
@@ -102,50 +98,52 @@ export default function App() {
   };
 
   return (
-    <View className="h-full">
-      {/* If loading -> show indicator */}
-      {isLoading && <ActivityIndicator size="large" color="#00ff9d" />}
+    <View className="flex-1 bg-gray-900">
+      {isLoading && (
+        <View className="absolute inset-0 bg-black/50 z-10 justify-center items-center">
+          <ActivityIndicator size="large" color="#00ff9d" />
+        </View>
+      )}
 
-      {/* If Unlocked -> show main app */}
       {!isUnlocked ? (
-        <View className="p-5 flex-1 justify-center items-center py-20">
-          <Image source={require("@/assets/logo.png")} />
-          <Text className="text-3xl font-bold text-center text-sky-500 mb-5">
+        <View className="flex-1 justify-center items-center px-6 py-10">
+          <Image
+            source={require("@/assets/logo.png")}
+            className="w-32 h-32 mb-2"
+            resizeMode="contain"
+          />
+          <Text className="text-4xl font-bold text-center text-sky-500 mb-5">
             PassVault
           </Text>
+
           {!storedMasterPassword ? (
-            <>
-              {/* If master password is not created -> Create vault screen */}
-              <CreateVault
-                masterPassword={masterPassword}
-                createVault={createVault}
-                isLoading={isLoading}
-                setMasterPassword={setMasterPassword}
-              />
-            </>
+            <CreateVault
+              masterPassword={masterPassword}
+              createVault={createVault}
+              isLoading={isLoading}
+              setMasterPassword={setMasterPassword}
+            />
           ) : (
-            <>
-              {/* If vault is created -> Enter password to unlock */}
-              <UnlockScreen
-                isLoading={isLoading}
-                masterPassword={masterPassword}
-                setMasterPassword={setMasterPassword}
-                unlockVault={unlockVault}
-              />
-            </>
+            <UnlockScreen
+              isLoading={isLoading}
+              masterPassword={masterPassword}
+              setMasterPassword={setMasterPassword}
+              unlockVault={unlockVault}
+            />
           )}
-          <View>
-            <Text className="text-center mt-4 text-gray-600">
-              Make sure to remember your master password. It cannot be recovered
-              if forgotten!
-            </Text>
-          </View>
+
+          <Text className="text-center mt-8 text-gray-400 text-sm px-6">
+            Make sure to remember your master password. It cannot be recovered
+            if forgotten!
+          </Text>
         </View>
       ) : (
-        <View className="p-5 flex justify-center items-center h-full">
-          <Text className="text-2xl text-red-600">Unlocked Successfully</Text>
-          <Text className="text-center">
-            Your encrypted vault is ready. Next step: add your first password!
+        <View className="flex-1 justify-center items-center px-6">
+          <Text className="text-3xl font-bold text-green-500">
+            Unlocked Successfully
+          </Text>
+          <Text className="text-center text-gray-300 mt-6 text-lg">
+            Your encrypted vault is ready. Add your first password!
           </Text>
         </View>
       )}
