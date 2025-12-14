@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <TextInput
-      className={`border border-sky-500/50 bg-gray-800 text-white px-4 py-4 rounded-lg text-lg ${className}`}
+      className={`border border-sky-500/50 bg-gray-800 text-white px-4 py-4 rounded-lg text-lg text-center ${className}`}
       secureTextEntry={secureTextEntry}
       placeholder={placeholder}
       placeholderTextColor="#94a3b8"
