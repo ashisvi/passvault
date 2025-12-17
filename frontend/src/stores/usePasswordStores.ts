@@ -1,30 +1,38 @@
+import { Password } from "@/types/passwords";
 import { create } from "zustand";
 
-interface PasswordSchema {
-  id: string;
-  username: string;
-  password: string;
-  siteName?: string;
-  url?: string;
-  notes?: string;
-  createdAt?: string;
-}
-
 interface PasswordStore {
-  passwords: PasswordSchema[];
-  addPassword: (password: PasswordSchema) => void;
+  passwords: Password[];
+  addPassword: (password: Password) => void;
   removePassword: (id: string) => void;
-  updatePassword: (
-    id: string,
-    updatedPassword: Partial<PasswordSchema>
-  ) => void;
+  updatePassword: (id: string, updatedPassword: Partial<Password>) => void;
 }
 
 export const usePasswordStore = create<PasswordStore>((set, get) => {
   return {
-    passwords: [],
+    // Sample passwords for testing
+    passwords: [
+      {
+        id: "1",
+        username: "user@example.com",
+        password: "SecurePass123!",
+        siteName: "Gmail",
+        url: "https://gmail.google.com",
+        notes: "Personal email account",
+        createdAt: new Date().toISOString(),
+      },
+      {
+        id: "2",
+        username: "john_doe",
+        password: "MyGitHubPass456#",
+        siteName: "GitHub",
+        url: "https://github.com",
+        notes: "Work account",
+        createdAt: new Date().toISOString(),
+      },
+    ],
 
-    addPassword: (password: PasswordSchema) => {
+    addPassword: (password: Password) => {
       set((state) => ({ passwords: [...state.passwords, password] }));
     },
 
@@ -34,7 +42,7 @@ export const usePasswordStore = create<PasswordStore>((set, get) => {
       }));
     },
 
-    updatePassword: (id: string, updatedPassword: Partial<PasswordSchema>) => {
+    updatePassword: (id: string, updatedPassword: Partial<Password>) => {
       set((state) => ({
         passwords: state.passwords.map((p) =>
           p.id === id ? { ...p, ...updatedPassword } : p
