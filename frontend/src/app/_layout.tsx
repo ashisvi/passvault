@@ -13,6 +13,7 @@ const RootLayout = () => {
     checkIfFirstTime();
   }, []);
 
+  // TODO: Use SafeAreaViewProvider
   return (
     <View className="flex-1">
       <Stack
@@ -25,7 +26,7 @@ const RootLayout = () => {
         }}
       >
         <Stack.Protected guard={isUnlocked}>
-          <Stack.Screen name="unlocked-page" />
+          <Stack.Screen name="(passwords)" />
         </Stack.Protected>
         <Stack.Protected guard={!isUnlocked}>
           <Stack.Screen name="(auth)" />

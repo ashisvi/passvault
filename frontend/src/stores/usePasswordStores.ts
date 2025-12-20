@@ -1,54 +1,175 @@
 import { Password } from "@/types/passwords";
+import * as CryptoES from "crypto-es";
+import * as SQLite from "expo-sqlite";
+import { Alert } from "react-native";
 import { create } from "zustand";
 
 interface PasswordStore {
   passwords: Password[];
+  isLoading: boolean;
+  encryptionKey: string | null;
+
+  setEncryptionKey: (key: string) => void;
+  initDatabase: () => Promise<void>;
+  loadPasswords: () => Promise<void>;
   addPassword: (password: Password) => void;
-  removePassword: (id: string) => void;
+  deletePassword: (id: string) => void;
   updatePassword: (id: string, updatedPassword: Partial<Password>) => void;
+  decryptPassword: (encrypted: string) => string;
 }
 
-export const usePasswordStore = create<PasswordStore>((set, get) => {
-  return {
-    // Sample passwords for testing
-    passwords: [
-      {
-        id: "1",
-        username: "user@example.com",
-        password: "SecurePass123!",
-        siteName: "Gmail",
-        url: "https://gmail.google.com",
-        notes: "Personal email account",
-        createdAt: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        username: "john_doe",
-        password: "MyGitHubPass456#",
-        siteName: "GitHub",
-        url: "https://github.com",
-        notes: "Work account",
-        createdAt: new Date().toISOString(),
-      },
-    ],
+// Database instance
+let db: SQLite.SQLiteDatabase | null = null;
 
-    addPassword: (password: Password) => {
-      set((state) => ({ passwords: [...state.passwords, password] }));
-    },
+export const usePasswordStore = create<PasswordStore>((set, get) => ({
+  // Sample passwords for testing
+  passwords: [],
+  isLoading: false,
+  encryptionKey: null,
 
-    removePassword: (id: string) => {
-      set((state) => ({
-        passwords: state.passwords.filter((p) => p.id !== id),
-      }));
-    },
+  setEncryptionKey: (key) => set({ encryptionKey: key }),
 
-    updatePassword: (id: string, updatedPassword: Partial<Password>) => {
-      set((state) => ({
-        passwords: state.passwords.map((p) =>
-          p.id === id ? { ...p, ...updatedPassword } : p
-        ),
-      }));
-    },
-  };
-});
+  initDatabase: async () => {
+    if (!db) {
+      db = SQLite.openDatabaseSync("passvault.db");
+      await db?.execSync(`
+          PRAGMA journal_mode=WAL;
+          CREATE TABLE IF NOT EXISTS passwords (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            site TEXT NOT NULL,
+            username TEXT,
+            password TEXT NOT NULL,
+            url TEXT,
+            notes TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          )
+          `);
+    }
+  },
+
+  loadPasswords: async () => {
+    set({ isLoading: true });
+
+    try {
+      if (!db) await get().initDatabase();
+
+      const results = db!.getAllSync<Password>(
+        "SELECT * FROM passwords ORDER BY site ASC"
+      );
+      set({ passwords: results });
+    } catch (error) {
+      Alert.alert("Error", "Failed to load passwords.");
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  addPassword: async ({ site, username, password, url, notes }: Password) => {
+    const { encryptionKey } = get();
+    if (!encryptionKey) {
+      Alert.alert("Error", "Vault is not unlocked");
+      return;
+    }
+
+    try {
+      const encryptedPassword = CryptoES.AES.encrypt(
+        password,
+        encryptionKey
+      ).toString;
+
+      db!.runSync(
+        "INSERT INTO passwords (site, username, password, url, notes) VALUES (?, ?, ?, ?, ?)",
+        site,
+        username || null,
+        password,
+        url || null,
+        notes || null
+      );
+
+      await get().loadPasswords();
+      Alert.alert("Success", `${site} saved securely!`);
+    } catch (error) {
+      Alert.alert("Error", "Failed to save password.");
+    }
+  },
+
+  deletePassword: async (id: string) => {
+    try {
+      Alert.alert("Delete Password", "This action cannot be undone.", [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            db!.runSync("DELETE FROM passwords WHERE id = ?", id);
+            get().loadPasswords();
+          },
+        },
+      ]);
+    } catch (error) {
+      Alert.alert("Error", "Failed to delete password.");
+    }
+  },
+
+  updatePassword: async (id: string, updatedPassword: Partial<Password>) => {
+    try {
+      if (!db) await get().initDatabase();
+
+      // Fetch existing record
+      const rows = db!.getAllSync<Password>(
+        "SELECT * FROM passwords WHERE id = ?",
+        id
+      );
+
+      const existing = rows && rows.length ? rows[0] : null;
+      if (!existing) {
+        Alert.alert("Error", "Password not found.");
+        return;
+      }
+
+      const merged: Password = {
+        ...existing,
+        ...updatedPassword,
+      } as Password;
+
+      const { site, username, password, url, notes } = merged;
+
+      const { encryptionKey } = get();
+      if (!encryptionKey) {
+        Alert.alert("Error", "Vault is not unlocked");
+        return;
+      }
+
+      const encryptedPassword = password
+        ? CryptoES.AES.encrypt(password, encryptionKey).toString()
+        : existing.password;
+
+      db!.runSync(
+        "UPDATE passwords SET site = ?, username = ?, password = ?, url = ?, notes = ? WHERE id = ?",
+        site,
+        username || null,
+        encryptedPassword,
+        url || null,
+        notes || null,
+        id
+      );
+
+      await get().loadPasswords();
+      Alert.alert("Success", "Password updated successfully.");
+    } catch (error) {
+      Alert.alert("Error", "Failed to update password");
+    }
+  },
+
+  decryptPassword: (encrypted) => {
+    const { encryptionKey } = get();
+    if (!encryptionKey) return "[Locked]";
+    try {
+      const bytes = CryptoES.AES.decrypt(encrypted, encryptionKey);
+      return bytes.toString(CryptoES.Utf8) || "[Invalid]";
+    } catch {
+      return "[Error]";
+    }
+  },
+}));
 export default usePasswordStore;

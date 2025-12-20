@@ -1,9 +1,9 @@
 export interface Password {
-  id: string;
-  username: string;
+  id?: string;
+  username?: string;
   password: string;
-  siteName?: string;
+  site: string;
   url?: string;
   notes?: string;
-  createdAt?: string;
+  created_at?: string;
 }

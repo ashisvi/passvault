@@ -1,3 +1,4 @@
+import { usePasswordStore } from "@/stores/usePasswordStores";
 import * as CryptoES from "crypto-es";
 import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
@@ -60,6 +61,10 @@ export const useVaultStore = create<VaultStore>((set, get) => {
           storedMasterPassword: key,
           isVaultCreated: true,
         });
+
+        // expose derived key to password store so it can encrypt/decrypt entries
+        usePasswordStore.getState().setEncryptionKey(key);
+
         router.replace("/unlocked-page");
       } catch (error) {
         Alert.alert("Error", "Failed to create vault. Please try again.");
@@ -92,6 +97,8 @@ export const useVaultStore = create<VaultStore>((set, get) => {
 
         if (derivedKey === storedKey) {
           set({ isUnlocked: true });
+          // set encryption key for password store
+          usePasswordStore.getState().setEncryptionKey(derivedKey);
         } else {
           Alert.alert("Wrong Password", "Try again", [
             { text: "OK", onPress: () => get().checkIfFirstTime() },
@@ -106,7 +113,9 @@ export const useVaultStore = create<VaultStore>((set, get) => {
 
     lockVault: async () => {
       set({ isUnlocked: false });
-      Alert.alert("", "Vault is unlocked successfully");
+      // clear encryption key when vault is locked
+      usePasswordStore.getState().setEncryptionKey("");
+      Alert.alert("", "Vault is locked");
     },
   };
 });

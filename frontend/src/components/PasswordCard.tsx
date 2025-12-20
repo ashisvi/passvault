@@ -8,10 +8,13 @@ const PasswordCard = ({ password }: { password: Password }) => {
   return (
     <View className="w-full p-4 flex-row items-center justify-between shadow-sm bg-gray-700/20 rounded-lg">
       <View className="flex-1 flex-row items-center justify-start gap-4">
-        <Image src={`${password.url}/favicon.ico`} className="h-10 w-10" />
+        <Image
+          src={`https://${password.url}/favicon.ico`}
+          className="h-10 w-10"
+        />
         <View>
           <Text className="text-white text-lg font-semibold">
-            {password.siteName}
+            {password.site}
           </Text>
           <Text className="text-gray-400 text-[1rem]">{password.username}</Text>
         </View>
