@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 const PasswordsLayout = () => {
   return (
-    <View className="flex-1">
+    <View className="flex-1 h-full">
       <Stack
         screenOptions={{
           headerShown: false,
@@ -15,6 +15,24 @@ const PasswordsLayout = () => {
         }}
       >
         <Stack.Screen name="index" />
+        <Stack.Screen
+          name="add-password"
+          options={{
+            headerShown: true,
+            headerTitle: "Add Password",
+            headerShadowVisible: false,
+            headerTintColor: "white",
+            headerStyle: {
+              backgroundColor: "transparent",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="view-password"
+          options={{
+            presentation: "modal",
+          }}
+        />
       </Stack>
     </View>
   );

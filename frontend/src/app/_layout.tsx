@@ -1,5 +1,7 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Stack } from "expo-router";
 import React, { useEffect } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import "@/global.css";
 import { useVaultStore } from "@/stores/useVaultStore";
@@ -15,24 +17,28 @@ const RootLayout = () => {
 
   // TODO: Use SafeAreaViewProvider
   return (
-    <View className="flex-1">
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          statusBarStyle: "light",
-          contentStyle: {
-            backgroundColor: "#1e2939",
-          },
-        }}
-      >
-        <Stack.Protected guard={isUnlocked}>
-          <Stack.Screen name="(passwords)" />
-        </Stack.Protected>
-        <Stack.Protected guard={!isUnlocked}>
-          <Stack.Screen name="(auth)" />
-        </Stack.Protected>
-      </Stack>
-    </View>
+    <GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <View className="flex-1">
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              statusBarStyle: "light",
+              contentStyle: {
+                backgroundColor: "#1e2939",
+              },
+            }}
+          >
+            <Stack.Protected guard={isUnlocked}>
+              <Stack.Screen name="home" />
+            </Stack.Protected>
+            <Stack.Protected guard={!isUnlocked}>
+              <Stack.Screen name="(auth)" />
+            </Stack.Protected>
+          </Stack>
+        </View>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 

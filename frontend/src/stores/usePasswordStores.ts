@@ -75,13 +75,13 @@ export const usePasswordStore = create<PasswordStore>((set, get) => ({
       const encryptedPassword = CryptoES.AES.encrypt(
         password,
         encryptionKey
-      ).toString;
+      ).toString();
 
       db!.runSync(
         "INSERT INTO passwords (site, username, password, url, notes) VALUES (?, ?, ?, ?, ?)",
         site,
         username || null,
-        password,
+        encryptedPassword,
         url || null,
         notes || null
       );

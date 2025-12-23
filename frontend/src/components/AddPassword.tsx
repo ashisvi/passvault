@@ -1,10 +1,8 @@
 import Button from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
 import { usePasswordStore } from "@/stores/usePasswordStores";
-import { useRouter } from "expo-router";
 import React from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const CHARSET =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
@@ -40,8 +38,7 @@ const StrengthBar = ({ score }: { score: number }) => {
   );
 };
 
-const AddPassword = () => {
-  const router = useRouter();
+const AddPassword = ({ isOpen }: any) => {
   const addPassword = usePasswordStore((s) => s.addPassword);
 
   const [site, setSite] = React.useState("");
@@ -69,7 +66,7 @@ const AddPassword = () => {
     try {
       await addPassword({ site: site.trim(), username, password, url, notes });
       // navigate back to the previous screen (password list)
-      router.back();
+      isOpen.current?.close();
     } catch (e) {
       Alert.alert("Error", "Failed to save password.");
     } finally {
@@ -78,13 +75,11 @@ const AddPassword = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-transparent px-4 pt-6">
-      <View className="w-full max-w-md mx-auto bg-[#0b1220] rounded-2xl p-5 shadow-md">
-        <Text className="text-2xl font-bold text-white mb-2">Add Password</Text>
-        <Text className="text-sm text-gray-400 mb-4">
-          Store credentials securely in your PassVault
-        </Text>
-
+    <View className="flex-1 bg-[#0b1220]">
+      <Text className="text-sm text-gray-400 mb-4 px-5 -mt-8">
+        Store credentials securely in your PassVault
+      </Text>
+      <View className="w-full max-w-md mx-auto bg-[#0b1220] rounded-b-2xl p-5 shadow-md">
         <Input
           placeholder="Site (e.g. Gmail)"
           value={site}
@@ -150,7 +145,7 @@ const AddPassword = () => {
           isDisabled={submitting || !site.trim() || !password}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

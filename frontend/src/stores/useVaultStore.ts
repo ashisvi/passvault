@@ -1,6 +1,5 @@
 import { usePasswordStore } from "@/stores/usePasswordStores";
 import * as CryptoES from "crypto-es";
-import { router } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import { Alert } from "react-native";
 import { create } from "zustand";
@@ -65,7 +64,7 @@ export const useVaultStore = create<VaultStore>((set, get) => {
         // expose derived key to password store so it can encrypt/decrypt entries
         usePasswordStore.getState().setEncryptionKey(key);
 
-        router.replace("/unlocked-page");
+        // router.replace("/");
       } catch (error) {
         Alert.alert("Error", "Failed to create vault. Please try again.");
       } finally {
