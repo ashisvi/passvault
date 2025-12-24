@@ -15,6 +15,7 @@
     "expo-secure-store": "~15.0.8",
     "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.8",
+    "expo-updates": "~29.0.15",
     "iconsax-react-nativejs": "^0.0.8",
     "metro-react-native-babel-preset": "^0.77.0",
     "react": "19.1.0",

@@ -26,6 +26,7 @@ const PasswordsLayout = () => {
           tabBarStyle: {
             backgroundColor: "#1e2939",
             borderColor: "#101828",
+            minHeight: 70,
           },
           tabBarItemStyle: {
             padding: 10,

@@ -1,45 +1,20 @@
-# PassVault
+# Expo Router and Tailwind CSS
 
-PassVault is a password manager application designed to help users securely store and manage their passwords. The application consists of a frontend built with React Native and Expo, and a backend built with Node.js and Express.
+Use [Expo Router](https://docs.expo.dev/router/introduction/) with [Uniwind](https://docs.uniwind.dev/) styling.
 
-## Overview
+## Launch your own
 
-PassVault allows users to create, store, and manage their passwords in a secure and encrypted manner. The application uses a combination of symmetric and asymmetric encryption to ensure that user data is protected.
+[![Launch with Expo](https://github.com/expo/examples/blob/master/.gh-assets/launch.svg?raw=true)](https://launch.expo.dev/?github=https://github.com/expo/examples/tree/master/with-router-uniwind)
 
-## Features
+## 🚀 How to use
 
-- User-friendly interface
-- User authentication and authorization
-- Password generation and strength analysis
-- Secure password storage and management
-- Support for multiple password vaults
+```sh
+npx create-expo-app -e with-router-uniwind
+```
 
-## Backend
+## Deploy
 
-The PassVault backend is built using Node.js and Express. It provides a RESTful API for the frontend to interact with, and is responsible for storing and managing user data.
+Deploy on all platforms with Expo Application Services (EAS).
 
-- [Backend README](backend/README.md)
-- [Backend API Documentation](backend/README.md#api-documentation)
-
-## Frontend
-
-The PassVault frontend is built using React Native and Expo. It provides a user-friendly interface for users to interact with the application, and is responsible for rendering the user interface and handling user interactions.
-
-- [Frontend README](frontend/README.md)
-- [Frontend Setup Instructions](frontend/README.md#getting-started)
-
-## Contributing
-
-We welcome contributions to the PassVault project! If you're interested in contributing, please read our [CONTRIBUTING.md](CONTRIBUTING.md) file for more information.
-
-## License
-
-PassVault is licensed under the [MIT License](LICENSE).
-
-## Acknowledgments
-
-We appreciate the contributions of the following individuals and organizations:
-
-- [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Node.js](https://nodejs.org/)
+- Deploy the website: `npx eas-cli deploy` — [Learn more](https://docs.expo.dev/eas/hosting/get-started/)
+- Deploy on iOS and Android using: `npx eas-cli build` — [Learn more](https://expo.dev/eas)

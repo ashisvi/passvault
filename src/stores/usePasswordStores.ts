@@ -17,6 +17,7 @@ interface PasswordStore {
   deleteAllPasswords: () => void;
   updatePassword: (id: string, updatedPassword: Partial<Password>) => void;
   decryptPassword: (encrypted: string) => string;
+  importPasswords?: (passwords: Password[]) => void;
 }
 
 // Database instance
@@ -181,6 +182,41 @@ export const usePasswordStore = create<PasswordStore>((set, get) => ({
       return bytes.toString(CryptoES.Utf8) || "[Invalid]";
     } catch {
       return "[Error]";
+    }
+  },
+
+  importPasswords: async (passwords: Password[]) => {
+    const { encryptionKey } = get();
+
+    if (!encryptionKey) {
+      Alert.alert("Error", "Vault is not unlocked");
+      return;
+    }
+
+    set({ isLoading: true });
+
+    try {
+      for (const pwd of passwords) {
+        const encryptedPassword = CryptoES.AES.encrypt(
+          pwd.password,
+          encryptionKey
+        ).toString();
+
+        db!.runAsync(
+          "INSERT INTO passwords (site, username, password, url, notes) VALUES (?, ?, ?, ?, ?)",
+          pwd.site,
+          pwd.username || null,
+          encryptedPassword,
+          pwd.url || null,
+          pwd.notes || null
+        );
+      }
+      Alert.alert("Success", "Passwords imported successfully.");
+    } catch (error) {
+      Alert.alert("Error", "Failed to import passwords.");
+    } finally {
+      await get().loadPasswords();
+      set({ isLoading: false });
     }
   },
 }));

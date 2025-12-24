@@ -1,13 +1,13 @@
 {
   "expo": {
-    "scheme": "acme",
+    "scheme": "passvault",
     "userInterfaceStyle": "automatic",
     "orientation": "default",
     "web": {
       "output": "static"
     },
-    "name": "frontend",
-    "slug": "frontend",
+    "name": "PassVault",
+    "slug": "passvault",
     "plugins": [
       "expo-router",
       "expo-secure-store",
@@ -27,6 +27,17 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8eb46b6f-1ff3-4784-8f23-7881b048b8d3"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8eb46b6f-1ff3-4784-8f23-7881b048b8d3"
+    }
   }
 }

@@ -47,6 +47,7 @@ function Settings() {
       for (const item of list) {
         // Expect site + password at minimum
         if (!item.site || !item.password) continue;
+        // TODO: Add all password at once
         await addPassword({
           site: item.site,
           username: item.username || "",
@@ -118,6 +119,7 @@ function Settings() {
         </View>
       </View>
 
+      {/* TODO: Add feature to import/export through file */}
       <Modal visible={importModalVisible} animationType="slide" transparent>
         <View className="flex-1 items-center justify-center bg-black/50 px-4">
           <View className="w-full max-w-md bg-[#1e2939] rounded-2xl p-5">

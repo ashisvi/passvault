@@ -66,7 +66,7 @@ const UnlockedPage = () => {
             </View>
           )}
           ListEmptyComponent={() => (
-            <View className="flex-1 justify-center items-center gap-5">
+            <View className="flex-1 justify-center items-center gap-5 h-96">
               <SearchNormal size={108} color="#6b7280e6" />
               <Text className="text-gray-400/75 text-xl">
                 No passwords found.
