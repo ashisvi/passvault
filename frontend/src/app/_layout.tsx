@@ -30,7 +30,7 @@ const RootLayout = () => {
             }}
           >
             <Stack.Protected guard={isUnlocked}>
-              <Stack.Screen name="home" />
+              <Stack.Screen name="(tabs)" />
             </Stack.Protected>
             <Stack.Protected guard={!isUnlocked}>
               <Stack.Screen name="(auth)" />

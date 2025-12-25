@@ -1,6 +1,7 @@
 import Button from "@/components/UI/Button";
 import Input from "@/components/UI/Input";
 import { usePasswordStore } from "@/stores/usePasswordStores";
+import { router } from "expo-router";
 import React from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 
@@ -38,35 +39,39 @@ const StrengthBar = ({ score }: { score: number }) => {
   );
 };
 
-const AddPassword = ({ isOpen }: any) => {
+const AddPassword = () => {
   const addPassword = usePasswordStore((s) => s.addPassword);
+  const [formData, setFormData] = React.useState({
+    site: "",
+    username: "",
+    password: "",
+    url: "",
+    notes: "",
+  });
 
-  const [site, setSite] = React.useState("");
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [url, setUrl] = React.useState("");
-  const [notes, setNotes] = React.useState("");
   const [submitting, setSubmitting] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const strength = passwordStrength(password);
+  const strength = passwordStrength(formData.password);
 
   const handleGenerate = () => {
     const pw = generatePassword(16);
-    setPassword(pw);
+    setFormData({ ...formData, password: pw });
   };
 
   const handleSubmit = async () => {
-    if (!site.trim() || !password) {
+    if (!formData.site.trim() || !formData.password) {
       Alert.alert("Validation", "Site and password are required.");
       return;
     }
 
     setSubmitting(true);
     try {
-      await addPassword({ site: site.trim(), username, password, url, notes });
+      await addPassword({ ...formData, site: formData.site.trim() });
       // navigate back to the previous screen (password list)
-      isOpen.current?.close();
+      router.back();
+
+      setFormData({ site: "", username: "", password: "", url: "", notes: "" });
     } catch (e) {
       Alert.alert("Error", "Failed to save password.");
     } finally {
@@ -75,33 +80,31 @@ const AddPassword = ({ isOpen }: any) => {
   };
 
   return (
-    <View className="flex-1 bg-[#0b1220]">
-      <Text className="text-sm text-gray-400 mb-4 px-5 -mt-8">
+    <View className="flex-1 bg-gray-800">
+      <Text className="text-sm text-gray-400 mb-4 px-5">
         Store credentials securely in your PassVault
       </Text>
-      <View className="w-full max-w-md mx-auto bg-[#0b1220] rounded-b-2xl p-5 shadow-md">
+      <View className="w-full max-w-md mx-auto bg-gray-800 rounded-b-2xl p-5">
         <Input
           placeholder="Site (e.g. Gmail)"
-          value={site}
-          setValue={setSite}
+          value={formData.site}
+          setValue={(site) => setFormData({ ...formData, site })}
           className="mb-3"
         />
         <Input
           placeholder="Username (optional)"
-          value={username}
-          setValue={setUsername}
+          value={formData.username}
+          setValue={(username) => setFormData({ ...formData, username })}
           className="mb-3"
         />
-
         <View className="mb-1 w-full">
           <Input
             secureTextEntry={!showPassword}
             placeholder="Password"
-            value={password}
-            setValue={setPassword}
+            value={formData.password}
+            setValue={(password) => setFormData({ ...formData, password })}
             className="mb-2"
           />
-
           <View className="flex-row justify-between items-center mb-3">
             <View className="flex-row space-x-2 gap-2">
               <TouchableOpacity
@@ -121,28 +124,25 @@ const AddPassword = ({ isOpen }: any) => {
             </View>
             <Text className="text-sm text-gray-400">{strength.label}</Text>
           </View>
-
           <StrengthBar score={strength.score} />
         </View>
-
         <Input
           placeholder="URL (optional)"
-          value={url}
-          setValue={setUrl}
+          value={formData.url}
+          setValue={(url) => setFormData({ ...formData, url })}
           className="mb-3"
         />
         <Input
           placeholder="Notes (optional)"
-          value={notes}
-          setValue={setNotes}
+          value={formData.notes}
+          setValue={(notes) => setFormData({ ...formData, notes })}
           className="mb-6"
           multiline
         />
-
         <Button
           onPress={handleSubmit}
           btnText={submitting ? "Saving..." : "Save Password"}
-          isDisabled={submitting || !site.trim() || !password}
+          isDisabled={submitting || !formData.site.trim() || !formData.password}
         />
       </View>
     </View>
