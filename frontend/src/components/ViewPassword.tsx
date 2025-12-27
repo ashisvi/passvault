@@ -90,7 +90,7 @@ const ViewPasswordModal = ({
   if (!entry) {
     return (
       <SafeAreaView className="flex-1 items-center justify-center px-6">
-        <View className="w-full max-w-md bg-[#0b1220] rounded-2xl p-6 items-center">
+        <View className="w-full max-w-md bg-[#1e2939] rounded-2xl p-6 items-center">
           <Text className="text-xl text-white font-semibold mb-2">
             No password selected
           </Text>
@@ -108,7 +108,7 @@ const ViewPasswordModal = ({
   }
 
   return (
-    <View className="w-full max-w-md mx-auto bg-[#0b1220] h-full p-5 shadow-md z-10">
+    <View className="w-full max-w-md mx-auto bg-[#1e2939] h-full p-5 shadow-md z-10">
       <View className="flex-row items-start justify-between mb-2">
         <View>
           <Text className="text-2xl font-bold text-white">{entry.site}</Text>

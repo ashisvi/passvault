@@ -8,9 +8,21 @@ const PasswordsLayout = () => {
     <View className="flex-1 h-full">
       <Tabs
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
+          headerStyle: {
+            backgroundColor: "#1e2939",
+          },
+          headerTitleStyle: {
+            color: "white",
+            fontSize: 30,
+            padding: 10,
+          },
+          headerTitleAlign: "center",
           tabBarShowLabel: false,
           tabBarInactiveTintColor: "#007aff",
+          sceneStyle: {
+            backgroundColor: "#1e2939",
+          },
           tabBarStyle: {
             backgroundColor: "#1e2939",
             borderColor: "#101828",
@@ -23,6 +35,7 @@ const PasswordsLayout = () => {
         <Tabs.Screen
           name="index"
           options={{
+            title: "PassVault",
             tabBarIcon: (props) => (
               <TabBarIcon Icon={Home3} props={{ ...props, size: 38 }} />
             ),
@@ -31,17 +44,10 @@ const PasswordsLayout = () => {
         <Tabs.Screen
           name="add-password"
           options={{
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: "#1e2939",
-            },
-            headerTitleStyle: {
-              color: "white",
-            },
             headerTitleAlign: "center",
             title: "Add New Password",
             tabBarIcon: (props) => (
-              <View className="bg-gray-800 rounded-full mb-15">
+              <View className="bg-gray-800 rounded-full mb-10">
                 <TabBarIcon Icon={AddCircle} props={{ ...props, size: 80 }} />
               </View>
             ),
@@ -50,6 +56,7 @@ const PasswordsLayout = () => {
         <Tabs.Screen
           name="settings"
           options={{
+            title: "Settings",
             tabBarIcon: (props) => (
               <TabBarIcon Icon={Setting} props={{ ...props, size: 42 }} />
             ),

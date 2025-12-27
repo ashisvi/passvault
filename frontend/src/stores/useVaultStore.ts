@@ -13,6 +13,7 @@ interface VaultStore {
   createVault: (password: string) => Promise<void>;
   unlockVault: (enteredPassword: string | undefined) => Promise<void>;
   lockVault: () => Promise<void>;
+  deleteVault: () => Promise<void>;
 }
 
 export const useVaultStore = create<VaultStore>((set, get) => {
@@ -113,8 +114,43 @@ export const useVaultStore = create<VaultStore>((set, get) => {
     lockVault: async () => {
       set({ isUnlocked: false });
       // clear encryption key when vault is locked
-      usePasswordStore.getState().setEncryptionKey("");
+      usePasswordStore.getState().setEncryptionKey(null);
       Alert.alert("", "Vault is locked");
+    },
+
+    deleteVault: async () => {
+      try {
+        Alert.alert(
+          "Delete Vault",
+          "This will delete the vault and ALL stored passwords. This action cannot be undone.",
+          [
+            { text: "Cancel", style: "cancel" },
+            {
+              text: "Delete",
+              style: "destructive",
+              onPress: async () => {
+                await SecureStore.deleteItemAsync("masterPassword");
+                await SecureStore.deleteItemAsync("salt");
+
+                // clear password storage
+                usePasswordStore.getState().deleteAllPasswords();
+
+                // clear vault state
+                set({
+                  isUnlocked: false,
+                  isVaultCreated: false,
+                  storedMasterPassword: "",
+                });
+                usePasswordStore.getState().setEncryptionKey(null);
+
+                Alert.alert("Success", "Vault deleted.");
+              },
+            },
+          ]
+        );
+      } catch (error) {
+        Alert.alert("Error", "Failed to delete vault.");
+      }
     },
   };
 });

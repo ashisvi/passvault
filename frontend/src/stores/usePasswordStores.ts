@@ -9,11 +9,12 @@ interface PasswordStore {
   isLoading: boolean;
   encryptionKey: string | null;
 
-  setEncryptionKey: (key: string) => void;
+  setEncryptionKey: (key: string | null) => void;
   initDatabase: () => Promise<void>;
   loadPasswords: () => Promise<void>;
   addPassword: (password: Password) => void;
   deletePassword: (id: string) => void;
+  deleteAllPasswords: () => void;
   updatePassword: (id: string, updatedPassword: Partial<Password>) => void;
   decryptPassword: (encrypted: string) => string;
 }
@@ -61,6 +62,17 @@ export const usePasswordStore = create<PasswordStore>((set, get) => ({
       Alert.alert("Error", "Failed to load passwords.");
     } finally {
       set({ isLoading: false });
+    }
+  },
+
+  deleteAllPasswords: async () => {
+    try {
+      if (!db) await get().initDatabase();
+      db!.runSync("DELETE FROM passwords");
+      await get().loadPasswords();
+      Alert.alert("Success", "All passwords deleted.");
+    } catch (error) {
+      Alert.alert("Error", "Failed to delete all passwords.");
     }
   },
 

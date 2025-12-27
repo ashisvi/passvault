@@ -2,15 +2,12 @@ import PasswordCard from "@/components/PasswordCard";
 import Input from "@/components/UI/Input";
 import ViewPasswordModal from "@/components/ViewPassword";
 import usePasswordStore from "@/stores/usePasswordStores";
-import { useVaultStore } from "@/stores/useVaultStore";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import { SearchNormal } from "iconsax-react-nativejs";
 import React, { useEffect } from "react";
 import { FlatList, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const UnlockedPage = () => {
-  const { lockVault } = useVaultStore();
   const { passwords, loadPasswords } = usePasswordStore();
   const [search, setSearch] = React.useState("");
   const [passwordId, setPasswordId] = React.useState<string>("");
@@ -31,7 +28,7 @@ const UnlockedPage = () => {
 
   return (
     <View className="flex-1 bg-gray-800">
-      <SafeAreaView>
+      <View className="flex-1">
         {/* Bottom Sheet for viewing password details */}
         <BottomSheet
           ref={passwordViewBottomSheet}
@@ -55,9 +52,8 @@ const UnlockedPage = () => {
         <FlatList
           contentContainerStyle={{
             gap: 12,
-            margin: 15,
-            minHeight: "100%",
           }}
+          className="p-3"
           data={filteredPasswords}
           ListHeaderComponent={() => (
             <View>
@@ -70,7 +66,7 @@ const UnlockedPage = () => {
             </View>
           )}
           ListEmptyComponent={() => (
-            <View className="flex-1 justify-center items-center gap-5 -mt-44">
+            <View className="flex-1 justify-center items-center gap-5">
               <SearchNormal size={108} color="#6b7280e6" />
               <Text className="text-gray-400/75 text-xl">
                 No passwords found.
@@ -87,7 +83,7 @@ const UnlockedPage = () => {
             />
           )}
         />
-      </SafeAreaView>
+      </View>
     </View>
   );
 };
